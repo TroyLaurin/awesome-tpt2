@@ -15,12 +15,14 @@ GLOBAL_UPTIER (1 action, 1 condition, impulse on '2')
 
 
 This script prevents any of the action scripts from running if you're not in the factory:
+
 LOC_SET_FACTORY (1 action, impulse on enter factory)
 `D0xPQ19TRVRfRkFDVE9SWQEAAAAMb3Blbi5mYWN0b3J5AAAAAAEAAAAOZ2xvYmFsLmludC5zZXQIY29uc3RhbnQECGxvY2F0aW9uCGNvbnN0YW50AgMAAAA=`
 
 ## Production scripts
 
 Produce a stack of plates (this is basically the only recipe that requires jumping out of the current recipe to easily produce multiple)
+
 FACTORY_CRAFT_PLATESTACK (2 actions, impulse on '0' when in factory)
 `GEZBQ1RPUllfQ1JBRlRfUExBVEVTVEFDSwEAAAAFa2V5LjABAAAADmNvbXBhcmlzb24uaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAhsb2NhdGlvbghjb25zdGFudAQCPT0IY29uc3RhbnQCAwAAAAIAAAANZmFjdG9yeS5jcmFmdAhjb25zdGFudAQLcGxhdGUuc3RhY2sOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQDAAAAAAAA8D8PZmFjdG9yeS5wcm9kdWNlCGNvbnN0YW50BAtwbGF0ZS5zdGFjaw5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAMAAAAAAADwPwhjb25zdGFudAQHcHJlc3Nlcg==`
 
