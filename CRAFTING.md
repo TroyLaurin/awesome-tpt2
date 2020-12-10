@@ -1,6 +1,6 @@
 # Crafting
 
-##Utility scripts
+## Utility scripts
 
 A set of scripts to allow choosing which tier to focus on:
 
