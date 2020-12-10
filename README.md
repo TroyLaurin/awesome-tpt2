@@ -9,7 +9,7 @@ Many thanks need to go to the discord users for either directly contributing scr
 
 ## Creating scripts
 
-The easiest way to obtain screen coordinates is to use these scripts (credit: Tortoise Box).  Turn on AI then move the mouse to the top-right corner of the screen to record the max screen size, then read the relative mouse coordinates from the variable list on the right.  Note that you should probably disable the `UNIVERSAL_MOUSE_EXTENTS` script when using this to avoid conflict with the `XMAX` and `YMAX` variables.
+The easiest way to obtain screen coordinates is to use these scripts (credit: "Tortoise Box#8888").  Turn on AI then move the mouse to the top-right corner of the screen to record the max screen size, then read the relative mouse coordinates from the variable list on the right.  Note that you should probably disable the `UNIVERSAL_MOUSE_EXTENTS` script when using this to avoid conflict with the `XMAX` and `YMAX` variables.
 
 UNIVERSAL_MOUSE_DEBUG (5 lines)
 `FXVuaXZlcnNhbF9tb3VzZV9kZWJ1ZwEAAAAGd2FrZXVwAAAAAAUAAAAPZ2VuZXJpYy5leGVjdXRlCGNvbnN0YW50BApfbWF4ZmluZGVyDGdlbmVyaWMud2FpdAhjb25zdGFudAMAAAAAAADgPxFnbG9iYWwuZG91YmxlLnNldAhjb25zdGFudAQGbW91c2V4EWFyaXRobWV0aWMuZG91YmxlBnZlYzIueA5tb3VzZS5wb3NpdGlvbghjb25zdGFudAQBLxFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQEeG1heBFnbG9iYWwuZG91YmxlLnNldAhjb25zdGFudAQGbW91c2V5EWFyaXRobWV0aWMuZG91YmxlBnZlYzIueQ5tb3VzZS5wb3NpdGlvbghjb25zdGFudAQBLxFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQEeW1heAxnZW5lcmljLmdvdG8IY29uc3RhbnQCAwAAAA==`
