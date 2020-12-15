@@ -2,7 +2,7 @@
 
 ## Usage
 
-This is a combination of global utility scripts that let you choose what you want to do, plus the crafting scripts which execute your choice.
+This is a combination of global utility scripts that let you choose what you want to do, plus the crafting scripts which execute your choice.  Note that crafting assumes that you have enough ingots of the correct tiers to build what you want, and will stop before completing the output if you don't have enough ingots.  If you craft more ingots and start construction again then it should pick up where it left off without crafting extra waste products.
 
 1. Choose the TIER you want to produce with '1' (loops from 1 to 10)
 2. Choose the COUNT of items you want to produce with '2' to count down and '3' to count up.  Counts up from 1-10, then 20, 30... 90, 100, then 200, 300 etc
