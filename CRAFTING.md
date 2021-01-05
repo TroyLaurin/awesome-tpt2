@@ -5,18 +5,28 @@
 This is a combination of global utility scripts that let you choose what you want to do, plus the crafting scripts which execute your choice.  Note that crafting assumes that you have enough ingots of the correct tiers to build what you want, and will stop before completing the output if you don't have enough ingots.  If you craft more ingots and start construction again then it should pick up where it left off without crafting extra waste products.
 
 1. Choose the TIER you want to produce with '1' (loops from 1 to 10)
-2. Choose the MODE with 2 and OUTPUT with 3.  Refer to the following table to see what will be produced:
+2. Choose the MODE with '2' and OUTPUT with '3'.  Refer to the following table to see what will be produced:
 
 | MODE | 1 (parts) | 2 (machines) | 3 (producers) |
 | ---: | --- | --- | --- |
 | **OUTPUT** | | | |
-| 1      | Chips | Oven | White (town)    |
-| 2      | Pumps | TODO | Blue (workshop) |
-| 3      | Motors | TODO | TODO |
+| 1      | Chips            | Oven      | White |
+| 2      | Insulated cables | Assembler | Blue |
+| 3      | Pumps            | Refiner   | Orange |
+| 4      | Motors           | Crusher   | Brown |
+| 5      | Cubes            | Cutter    | TODO |
+| 6      | Dense Plates     | Presser   | TODO |
+| 7      | Dust (tier up)   | Mixer     | TODO |
+| 8      | -                | Belt      | TODO |
+| 9      | -                | Shaper    | TODO |
+| 10     | -                | Boiler    | TODO |
+| 11     | -                | -         | TODO |
+| 12     | -                | -         | TODO |
+| 13     | -                | -         | Black |
 
 3. Choose the COUNT of items you want to produce with '8' to count down and '9' to count up.  Counts up from 1-10, then 20, 30... 90, 100, then 200, 300 etc
-4. Optionally choose whether to craft ALL items for the desired output (`CRAFT_PRESERVATION = 0.0`) or to use up components that are already in your inventory when crafting the output (`CRAFT_PRESERVATION = 1.0`)
-5. Hit '0' while in the factory to start production
+4. Optionally choose whether to craft ALL items for the desired output (`CRAFT_PRESERVATION = 0.0`) or to use up components that are already in your inventory when crafting the output (`CRAFT_PRESERVATION = 1.0`) - toggled with '4'.
+5. Hit '0' while in the factory to start production.
 
 ## The scripts (general)
 
@@ -50,6 +60,12 @@ tier = (tier % 10) + 1
 
 <table>
 <tr>
+  <th>Script name</th>
+  <th>Impulse</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
   <td>global_craft_mode</td><td>2</td><td>2 1 2</td><td>
 
 ```
@@ -73,6 +89,12 @@ craft_output = 1
 `EWdsb2JhbF9jcmFmdF9tb2RlAgAAAAZ3YWtldXAFa2V5LjIBAAAADmNvbXBhcmlzb24uaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAhjcmFmdGluZwhjb25zdGFudAQCPT0IY29uc3RhbnQCAAAAAAIAAAAOZ2xvYmFsLmludC5zZXQIY29uc3RhbnQECmNyYWZ0X21vZGUOYXJpdGhtZXRpYy5pbnQOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECmNyYWZ0X21vZGUIY29uc3RhbnQEA21vZAhjb25zdGFudAIDAAAACGNvbnN0YW50BAErCGNvbnN0YW50AgEAAAAOZ2xvYmFsLmludC5zZXQIY29uc3RhbnQEDGNyYWZ0X291dHB1dAhjb25zdGFudAIBAAAA`
 
 <table>
+<tr>
+  <th>Script name</th>
+  <th>Impulse</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
 <tr>
   <td>global_craft_output</td><td>3</td><td>1 1 2</td><td>
 
@@ -98,6 +120,12 @@ craft_output = (craft_output % max_value) + 1
 
 <table>
 <tr>
+  <th>Script name</th>
+  <th>Impulse</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
   <td>global_craft_preservation</td><td>4</td><td>2 1 1</td><td>
 
 ```
@@ -120,32 +148,11 @@ craft_preservation = (craft_preservation + 1.0) % 2.0
 
 <table>
 <tr>
-  <td>global_craft_countup</td><td>9</td><td>1 1 5</td><td>
-
-```
-:local int inc
-:local double pow
-:global double count
-:global int crafting
-
-key.9()
-
-(crafting == 0)
-
-   gotoif(99, count > 9000000.0)
-   gotoif(a, count < 1.0)
-   pow = double.floor(0.01 + (count // 10.0))
-a: inc = 10 ^ d2i(pow)
-   count = count + i2d(inc)
-```
-
-</td>
+  <th>Script name</th>
+  <th>Impulse</th>
+  <th>Lines</th>
+  <th>Code</th>
 </tr>
-</table>
-
-`FGdsb2JhbF9jcmFmdF9jb3VudHVwAQAAAAVrZXkuOQEAAAAOY29tcGFyaXNvbi5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECGNyYWZ0aW5nCGNvbnN0YW50BAI9PQhjb25zdGFudAIAAAAABQAAAA5nZW5lcmljLmdvdG9pZghjb25zdGFudAJjAAAAEWNvbXBhcmlzb24uZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBPghjb25zdGFudAMAAAAAiCphQQ5nZW5lcmljLmdvdG9pZghjb25zdGFudAIEAAAAEWNvbXBhcmlzb24uZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBPAhjb25zdGFudAMAAAAAAADwPxBsb2NhbC5kb3VibGUuc2V0CGNvbnN0YW50BANwb3cMZG91YmxlLmZsb29yEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50A3sUrkfheoQ/CGNvbnN0YW50BAErEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQDbG9nCGNvbnN0YW50AwAAAAAAACRADWxvY2FsLmludC5zZXQIY29uc3RhbnQEA2luYw5hcml0aG1ldGljLmludAhjb25zdGFudAIKAAAACGNvbnN0YW50BANwb3cDZDJpEGxvY2FsLmRvdWJsZS5nZXQIY29uc3RhbnQEA3BvdxFnbG9iYWwuZG91YmxlLnNldAhjb25zdGFudAQFY291bnQRYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAErA2kyZA1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BANpbmM=`
-
-<table>
 <tr>
   <td>global_craft_countdown</td><td>8</td><td>1 1 6</td><td>
 
@@ -176,6 +183,45 @@ a: inc = 10 ^ d2i(pow)
 
 <table>
 <tr>
+  <th>Script name</th>
+  <th>Impulse</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
+  <td>global_craft_countup</td><td>9</td><td>1 1 5</td><td>
+
+```
+:local int inc
+:local double pow
+:global double count
+:global int crafting
+
+key.9()
+
+(crafting == 0)
+
+   gotoif(99, count > 9000000.0)
+   gotoif(a, count < 1.0)
+   pow = double.floor(0.01 + (count // 10.0))
+a: inc = 10 ^ d2i(pow)
+   count = count + i2d(inc)
+```
+
+</td>
+</tr>
+</table>
+
+`FGdsb2JhbF9jcmFmdF9jb3VudHVwAQAAAAVrZXkuOQEAAAAOY29tcGFyaXNvbi5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECGNyYWZ0aW5nCGNvbnN0YW50BAI9PQhjb25zdGFudAIAAAAABQAAAA5nZW5lcmljLmdvdG9pZghjb25zdGFudAJjAAAAEWNvbXBhcmlzb24uZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBPghjb25zdGFudAMAAAAAiCphQQ5nZW5lcmljLmdvdG9pZghjb25zdGFudAIEAAAAEWNvbXBhcmlzb24uZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBPAhjb25zdGFudAMAAAAAAADwPxBsb2NhbC5kb3VibGUuc2V0CGNvbnN0YW50BANwb3cMZG91YmxlLmZsb29yEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50A3sUrkfheoQ/CGNvbnN0YW50BAErEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQDbG9nCGNvbnN0YW50AwAAAAAAACRADWxvY2FsLmludC5zZXQIY29uc3RhbnQEA2luYw5hcml0aG1ldGljLmludAhjb25zdGFudAIKAAAACGNvbnN0YW50BANwb3cDZDJpEGxvY2FsLmRvdWJsZS5nZXQIY29uc3RhbnQEA3BvdxFnbG9iYWwuZG91YmxlLnNldAhjb25zdGFudAQFY291bnQRYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAErA2kyZA1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BANpbmM=`
+
+<table>
+<tr>
+  <th>Script name</th>
+  <th>Impulse</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
   <td>factory_craft</td><td>0</td><td>1 1 3</td><td>
 
 ```
@@ -200,6 +246,7 @@ crafting = 0
 
 
 ## Part crafting
+### Chips
 
 <table>
 <tr>
@@ -417,7 +464,238 @@ b: craft1_state = craft1_state + 16
 
 `F2ZhY3RvcnlfY3JhZnRfMS4xX3dpcmVzAAAAAAAAAAANAAAAEGxvY2FsLmRvdWJsZS5zZXQIY29uc3RhbnQECmNpcmN1aXRfbG8RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEqCGNvbnN0YW50AwAAAAAAAABAEGxvY2FsLmRvdWJsZS5zZXQIY29uc3RhbnQECmNpcmN1aXRfaGkRYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEqEWFyaXRobWV0aWMuZG91YmxlDGRvdWJsZS5mbG9vchFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMAAAAAIGULQQhjb25zdGFudAQBLxFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMAAAAAAAAkQAhjb25zdGFudAQDcG93A2kyZA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQDbW9kCGNvbnN0YW50AwAAAAAAACRADmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AggAAAARY29tcGFyaXNvbi5kb3VibGUQbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQKY2lyY3VpdF9sbwhjb25zdGFudAQCPD0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEEmNyYWZ0X3ByZXNlcnZhdGlvbghjb25zdGFudAQBKhNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAdjaXJjdWl0DmFyaXRobWV0aWMuaW50DmFyaXRobWV0aWMuaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAEqCGNvbnN0YW50AgIAAAAIY29uc3RhbnQEAS0IY29uc3RhbnQCAQAAABFnZW5lcmljLndhaXR3aGlsZRFjb21wYXJpc29uLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BApjaXJjdWl0X2xvCGNvbnN0YW50BAE+EWFyaXRobWV0aWMuZG91YmxlE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBWNhYmxlDmFyaXRobWV0aWMuaW50DmFyaXRobWV0aWMuaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAEqCGNvbnN0YW50AgIAAAAIY29uc3RhbnQEAS0IY29uc3RhbnQCAQAAAAhjb25zdGFudAQBLRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQSY3JhZnRfcHJlc2VydmF0aW9uCGNvbnN0YW50BAEqE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEB2NpcmN1aXQOYXJpdGhtZXRpYy5pbnQOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEASoIY29uc3RhbnQCAgAAAAhjb25zdGFudAQBLQhjb25zdGFudAIBAAAAEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQECWFzc2VtYmxlcg9mYWN0b3J5LnByb2R1Y2UIY29uc3RhbnQEBWNhYmxlDmFyaXRobWV0aWMuaW50DmFyaXRobWV0aWMuaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAEqCGNvbnN0YW50AgIAAAAIY29uc3RhbnQEAS0IY29uc3RhbnQCAQAAABFhcml0aG1ldGljLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BApjaXJjdWl0X2xvCGNvbnN0YW50BAEtEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BBJjcmFmdF9wcmVzZXJ2YXRpb24IY29uc3RhbnQEASoTZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQHY2lyY3VpdA5hcml0aG1ldGljLmludA5hcml0aG1ldGljLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQBKghjb25zdGFudAICAAAACGNvbnN0YW50BAEtCGNvbnN0YW50AgEAAAAIY29uc3RhbnQECWFzc2VtYmxlchFnZW5lcmljLndhaXR3aGlsZRZmYWN0b3J5Lm1hY2hpbmUuYWN0aXZlCGNvbnN0YW50BAlhc3NlbWJsZXIOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCDQAAABFjb21wYXJpc29uLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BApjaXJjdWl0X2hpCGNvbnN0YW50BAI8PRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQSY3JhZnRfcHJlc2VydmF0aW9uCGNvbnN0YW50BAEqE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEB2NpcmN1aXQOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEASoIY29uc3RhbnQCAgAAABFnZW5lcmljLndhaXR3aGlsZRFjb21wYXJpc29uLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BApjaXJjdWl0X2hpCGNvbnN0YW50BAE+EWFyaXRobWV0aWMuZG91YmxlE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBWNhYmxlDmFyaXRobWV0aWMuaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAEqCGNvbnN0YW50AgIAAAAIY29uc3RhbnQEAS0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEEmNyYWZ0X3ByZXNlcnZhdGlvbghjb25zdGFudAQBKhNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAdjaXJjdWl0DmFyaXRobWV0aWMuaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAEqCGNvbnN0YW50AgIAAAARZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQJYXNzZW1ibGVyD2ZhY3RvcnkucHJvZHVjZQhjb25zdGFudAQFY2FibGUOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEASoIY29uc3RhbnQCAgAAABFhcml0aG1ldGljLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BApjaXJjdWl0X2hpCGNvbnN0YW50BAEtEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BBJjcmFmdF9wcmVzZXJ2YXRpb24IY29uc3RhbnQEASoTZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQHY2lyY3VpdA5hcml0aG1ldGljLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQBKghjb25zdGFudAICAAAACGNvbnN0YW50BAlhc3NlbWJsZXIRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQJYXNzZW1ibGVyDmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAxjcmFmdDFfc3RhdGUOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEDGNyYWZ0MV9zdGF0ZQhjb25zdGFudAQBKwhjb25zdGFudAIQAAAA`
 
+### Insulated cables
+
 <table>
+<tr>
+  <th>Script name</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
+  <td>factory_craft_1.2</td><td>0 0 11</td><td>
+
+```
+:global double count
+:global int tier
+:global double craft_preservation
+:local double target_cables
+:local double target_plates
+
+; Insulated cable
+
+target_cables = count * double.max(double.max(1.0, i2d(tier) - 2.0), double.max(10.0 - (5.0 * ((i2d(tier) - 8.0) ^ 2.0)), double.ceil(((i2d(tier) - 1.0) ^ 1.5) - 11.0)))
+target_plates = count * double.max(0.0, ((2.0 * i2d(tier)) - 4.0) - double.max(0.0, 2.0 - ((i2d(tier) - 8.0) * (i2d(tier) - 9.0))))
+; can craft other things from this point?
+
+   gotoif(a, craft_preservation * count("cable", tier) >= target_cables)
+   waitwhile(active("refinery"))
+   produce("ingot", tier, double.ceil((target_cables - craft_preservation * count("cable", tier)) / 2.0), "refinery")
+
+a: gotoif(b, craft_preservation * count("plate.rubber", 1) >= target_plates)
+   waitwhile(active("presser"))
+   produce("rubber", 1, target_plates - craft_preservation * count("plate.rubber", 1), "presser")
+
+b: waituntil(count("cable", tier) >= target_cables)
+   waituntil(count("plate.rubber", 1) >= target_plates)
+
+craft("cable.insulated", tier, count)
+```
+
+</td>
+</tr>
+</table>
+
+`EWZhY3RvcnlfY3JhZnRfMS4yAAAAAAAAAAALAAAAEGxvY2FsLmRvdWJsZS5zZXQIY29uc3RhbnQEDXRhcmdldF9jYWJsZXMRYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEqCmRvdWJsZS5tYXgKZG91YmxlLm1heAhjb25zdGFudAMAAAAAAADwPxFhcml0aG1ldGljLmRvdWJsZQNpMmQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAS0IY29uc3RhbnQDAAAAAAAAAEAKZG91YmxlLm1heBFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMAAAAAAAAkQAhjb25zdGFudAQBLRFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMAAAAAAAAUQAhjb25zdGFudAQBKhFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZQNpMmQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAS0IY29uc3RhbnQDAAAAAAAAIEAIY29uc3RhbnQEA3Bvdwhjb25zdGFudAMAAAAAAAAAQAtkb3VibGUuY2VpbBFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZQNpMmQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAS0IY29uc3RhbnQDAAAAAAAA8D8IY29uc3RhbnQEA3Bvdwhjb25zdGFudAMAAAAAAAD4Pwhjb25zdGFudAQBLQhjb25zdGFudAMAAAAAAAAmQBBsb2NhbC5kb3VibGUuc2V0CGNvbnN0YW50BA10YXJnZXRfcGxhdGVzEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBKgpkb3VibGUubWF4CGNvbnN0YW50AwAAAAAAAAAAEWFyaXRobWV0aWMuZG91YmxlEWFyaXRobWV0aWMuZG91YmxlEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50AwAAAAAAAABACGNvbnN0YW50BAEqA2kyZA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQBLQhjb25zdGFudAMAAAAAAAAQQAhjb25zdGFudAQBLQpkb3VibGUubWF4CGNvbnN0YW50AwAAAAAAAAAAEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50AwAAAAAAAABACGNvbnN0YW50BAEtEWFyaXRobWV0aWMuZG91YmxlEWFyaXRobWV0aWMuZG91YmxlA2kyZA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQBLQhjb25zdGFudAMAAAAAAAAgQAhjb25zdGFudAQBKhFhcml0aG1ldGljLmRvdWJsZQNpMmQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAS0IY29uc3RhbnQDAAAAAAAAIkAOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCBgAAABFjb21wYXJpc29uLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQSY3JhZnRfcHJlc2VydmF0aW9uCGNvbnN0YW50BAEqE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBWNhYmxlDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAI+PRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BA10YXJnZXRfY2FibGVzEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQECHJlZmluZXJ5D2ZhY3RvcnkucHJvZHVjZQhjb25zdGFudAQFaW5nb3QOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXILZG91YmxlLmNlaWwRYXJpdGhtZXRpYy5kb3VibGURYXJpdGhtZXRpYy5kb3VibGUQbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQNdGFyZ2V0X2NhYmxlcwhjb25zdGFudAQBLRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQSY3JhZnRfcHJlc2VydmF0aW9uCGNvbnN0YW50BAEqE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBWNhYmxlDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAEvCGNvbnN0YW50AwAAAAAAAABACGNvbnN0YW50BAhyZWZpbmVyeQ5nZW5lcmljLmdvdG9pZghjb25zdGFudAIJAAAAEWNvbXBhcmlzb24uZG91YmxlEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BBJjcmFmdF9wcmVzZXJ2YXRpb24IY29uc3RhbnQEASoTZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQMcGxhdGUucnViYmVyCGNvbnN0YW50AgEAAAAIY29uc3RhbnQEAj49EGxvY2FsLmRvdWJsZS5nZXQIY29uc3RhbnQEDXRhcmdldF9wbGF0ZXMRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQHcHJlc3Nlcg9mYWN0b3J5LnByb2R1Y2UIY29uc3RhbnQEBnJ1YmJlcghjb25zdGFudAIBAAAAEWFyaXRobWV0aWMuZG91YmxlEGxvY2FsLmRvdWJsZS5nZXQIY29uc3RhbnQEDXRhcmdldF9wbGF0ZXMIY29uc3RhbnQEAS0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEEmNyYWZ0X3ByZXNlcnZhdGlvbghjb25zdGFudAQBKhNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAxwbGF0ZS5ydWJiZXIIY29uc3RhbnQCAQAAAAhjb25zdGFudAQHcHJlc3NlchFnZW5lcmljLndhaXR1bnRpbBFjb21wYXJpc29uLmRvdWJsZRNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAVjYWJsZQ5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQCPj0QbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQNdGFyZ2V0X2NhYmxlcxFnZW5lcmljLndhaXR1bnRpbBFjb21wYXJpc29uLmRvdWJsZRNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAxwbGF0ZS5ydWJiZXIIY29uc3RhbnQCAQAAAAhjb25zdGFudAQCPj0QbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQNdGFyZ2V0X3BsYXRlcw1mYWN0b3J5LmNyYWZ0CGNvbnN0YW50BA9jYWJsZS5pbnN1bGF0ZWQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIRZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50`
+
+### Pumps
+<table>
+<tr>
+  <th>Script name</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
+  <td>factory_craft_1.3</td><td>0 0 13</td><td>
+
+```
+:global double count
+:global int tier
+:global double craft_preservation
+:global int craft_state
+
+; Pumps
+
+; each pump needs one motor.  Same count, same tier
+   executesync("factory_craft_1.4")
+   craft_state = 1
+   execute("factory_craft_1.3_rings")
+   
+; target_plates = count * 2.0
+; target_rubber = count * 4.0
+
+   gotoif(a, count * 2.0 <= craft_preservation * count("plate", tier))
+   waitwhile(active("presser"))
+   produce("ingot", tier, count * 2.0 - craft_preservation * count("plate", tier), "presser")
+   
+a: gotoif(b, count * 4.0 <= craft_preservation * count("plate.rubber", 1))
+   waitwhile(active("presser"))
+   produce("rubber", 1, count * 4.0 - craft_preservation * count("plate.rubber", 1), "presser")
+
+b: waituntil(craft_state >= 3)
+   waituntil(count * 2.0 <= count("plate", tier))
+   waituntil(count * 4.0 <= count("plate.rubber", 1))
+
+craft("pump", tier, count)
+```
+
+</td>
+</tr>
+</table>
+
+`EWZhY3RvcnlfY3JhZnRfMS4zAAAAAAAAAAANAAAAE2dlbmVyaWMuZXhlY3V0ZXN5bmMIY29uc3RhbnQEEWZhY3RvcnlfY3JhZnRfMS40Dmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAtjcmFmdF9zdGF0ZQhjb25zdGFudAIBAAAAD2dlbmVyaWMuZXhlY3V0ZQhjb25zdGFudAQXZmFjdG9yeV9jcmFmdF8xLjNfcmluZ3MOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCBwAAABFjb21wYXJpc29uLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQIY29uc3RhbnQEASoIY29uc3RhbnQDAAAAAAAAAEAIY29uc3RhbnQEAjw9EWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BBJjcmFmdF9wcmVzZXJ2YXRpb24IY29uc3RhbnQEASoTZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQFcGxhdGUOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQHcHJlc3Nlcg9mYWN0b3J5LnByb2R1Y2UIY29uc3RhbnQEBWluZ290Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyEWFyaXRobWV0aWMuZG91YmxlEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBKghjb25zdGFudAMAAAAAAAAAQAhjb25zdGFudAQBLRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQSY3JhZnRfcHJlc2VydmF0aW9uCGNvbnN0YW50BAEqE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBXBsYXRlDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAdwcmVzc2VyDmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AgoAAAARY29tcGFyaXNvbi5kb3VibGURYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEqCGNvbnN0YW50AwAAAAAAABBACGNvbnN0YW50BAI8PRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQSY3JhZnRfcHJlc2VydmF0aW9uCGNvbnN0YW50BAEqE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEDHBsYXRlLnJ1YmJlcghjb25zdGFudAIBAAAAEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQEB3ByZXNzZXIPZmFjdG9yeS5wcm9kdWNlCGNvbnN0YW50BAZydWJiZXIIY29uc3RhbnQCAQAAABFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQIY29uc3RhbnQEASoIY29uc3RhbnQDAAAAAAAAEEAIY29uc3RhbnQEAS0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEEmNyYWZ0X3ByZXNlcnZhdGlvbghjb25zdGFudAQBKhNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAxwbGF0ZS5ydWJiZXIIY29uc3RhbnQCAQAAAAhjb25zdGFudAQHcHJlc3NlchFnZW5lcmljLndhaXR1bnRpbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQLY3JhZnRfc3RhdGUIY29uc3RhbnQEAj49CGNvbnN0YW50AgMAAAARZ2VuZXJpYy53YWl0dW50aWwRY29tcGFyaXNvbi5kb3VibGURYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEqCGNvbnN0YW50AwAAAAAAAABACGNvbnN0YW50BAI8PRNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAVwbGF0ZQ5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllchFnZW5lcmljLndhaXR1bnRpbBFjb21wYXJpc29uLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQIY29uc3RhbnQEASoIY29uc3RhbnQDAAAAAAAAEEAIY29uc3RhbnQEAjw9E2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEDHBsYXRlLnJ1YmJlcghjb25zdGFudAIBAAAADWZhY3RvcnkuY3JhZnQIY29uc3RhbnQEBHB1bXAOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIRZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50`
+
+<table>
+<tr>
+  <td>factory_craft_1.3_rings</td><td>0 0 8</td><td>
+
+```
+:global int craft_state
+:global int tier
+:global double craft_preservation
+:global double count
+
+; target = count * 2.0
+
+   gotoif(a, craft_preservation * count("rod", tier) >= count * 2.0)
+   waitwhile(active("shaper"))
+   produce("ingot", tier, double.ceil((count * 2.0 - craft_preservation * count("rod", tier)) / 2.0), "shaper")
+
+a: gotoif(b, craft_preservation * count("ring", tier) >= count * 2.0)
+   waitwhile(active("shaper"))
+   produce("rod", tier, count * 2.0 - craft_preservation * count("ring", tier), "shaper")
+
+b: waituntil(count("ring", tier) >= count * 2.0)
+   craft_state = craft_state + 2
+```
+
+</td>
+</tr>
+</table>
+
+`F2ZhY3RvcnlfY3JhZnRfMS4zX3JpbmdzAAAAAAAAAAAIAAAADmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AgQAAAARY29tcGFyaXNvbi5kb3VibGURYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEEmNyYWZ0X3ByZXNlcnZhdGlvbghjb25zdGFudAQBKhNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BANyb2QOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAj49EWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBKghjb25zdGFudAMAAAAAAAAAQBFnZW5lcmljLndhaXR3aGlsZRZmYWN0b3J5Lm1hY2hpbmUuYWN0aXZlCGNvbnN0YW50BAZzaGFwZXIPZmFjdG9yeS5wcm9kdWNlCGNvbnN0YW50BAVpbmdvdA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcgtkb3VibGUuY2VpbBFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQIY29uc3RhbnQEASoIY29uc3RhbnQDAAAAAAAAAEAIY29uc3RhbnQEAS0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEEmNyYWZ0X3ByZXNlcnZhdGlvbghjb25zdGFudAQBKhNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BANyb2QOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAS8IY29uc3RhbnQDAAAAAAAAAEAIY29uc3RhbnQEBnNoYXBlcg5nZW5lcmljLmdvdG9pZghjb25zdGFudAIHAAAAEWNvbXBhcmlzb24uZG91YmxlEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BBJjcmFmdF9wcmVzZXJ2YXRpb24IY29uc3RhbnQEASoTZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQEcmluZw5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQCPj0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEqCGNvbnN0YW50AwAAAAAAAABAEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQEBnNoYXBlcg9mYWN0b3J5LnByb2R1Y2UIY29uc3RhbnQEA3JvZA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllchFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQIY29uc3RhbnQEASoIY29uc3RhbnQDAAAAAAAAAEAIY29uc3RhbnQEAS0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEEmNyYWZ0X3ByZXNlcnZhdGlvbghjb25zdGFudAQBKhNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BARyaW5nDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAZzaGFwZXIRZ2VuZXJpYy53YWl0dW50aWwRY29tcGFyaXNvbi5kb3VibGUTZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQEcmluZw5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQCPj0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEqCGNvbnN0YW50AwAAAAAAAABADmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAtjcmFmdF9zdGF0ZQ5hcml0aG1ldGljLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQLY3JhZnRfc3RhdGUIY29uc3RhbnQEASsIY29uc3RhbnQCAgAAAA==`
+
+### Motors
+
+<table>
+<tr>
+  <th>Script name</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
+  <td>factory_craft_1.4</td><td>0 0 9</td><td>
+
+```
+:global double count
+:global int tier
+:global double craft_preservation
+:global int craft_state
+
+   craft_state = 1
+   execute("factory_craft_1.4_coils")
+   execute("factory_craft_1.4_rods")
+
+; target_plates = count * 4.0
+   gotoif(a, craft_preservation * count("plate", tier) >= count * 4.0)
+   waitwhile(active("presser"))
+   produce("ingot", tier, count * 4.0 - craft_preservation * count("plate", tier), "presser")
+
+a: waituntil(craft_state >= 7)
+   waituntil(count("plate", tier) >= count * 4.0)
+
+craft("motor", tier, count)
+```
+
+</td>
+</tr>
+</table>
+
+`EWZhY3RvcnlfY3JhZnRfMS40AAAAAAAAAAAJAAAADmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAtjcmFmdF9zdGF0ZQhjb25zdGFudAIBAAAAD2dlbmVyaWMuZXhlY3V0ZQhjb25zdGFudAQXZmFjdG9yeV9jcmFmdF8xLjRfY29pbHMPZ2VuZXJpYy5leGVjdXRlCGNvbnN0YW50BBZmYWN0b3J5X2NyYWZ0XzEuNF9yb2RzDmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AgcAAAARY29tcGFyaXNvbi5kb3VibGURYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEEmNyYWZ0X3ByZXNlcnZhdGlvbghjb25zdGFudAQBKhNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAVwbGF0ZQ5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQCPj0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEqCGNvbnN0YW50AwAAAAAAABBAEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQEB3ByZXNzZXIPZmFjdG9yeS5wcm9kdWNlCGNvbnN0YW50BAVpbmdvdA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllchFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQIY29uc3RhbnQEASoIY29uc3RhbnQDAAAAAAAAEEAIY29uc3RhbnQEAS0RYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEEmNyYWZ0X3ByZXNlcnZhdGlvbghjb25zdGFudAQBKhNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAVwbGF0ZQ5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQHcHJlc3NlchFnZW5lcmljLndhaXR1bnRpbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQLY3JhZnRfc3RhdGUIY29uc3RhbnQEAj49CGNvbnN0YW50AgcAAAARZ2VuZXJpYy53YWl0dW50aWwRY29tcGFyaXNvbi5kb3VibGUTZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQFcGxhdGUOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAj49EWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBKghjb25zdGFudAMAAAAAAAAQQA1mYWN0b3J5LmNyYWZ0CGNvbnN0YW50BAVtb3Rvcg5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllchFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQ=`
+
+<table>
+<tr>
+  <td>factory_craft</td><td>0 0 9</td><td>
+
+```
+```
+
+</td>
+</tr>
+</table>
+
+` `
+
+<table>
+<tr>
+  <td>factory_craft</td><td>0 0 9</td><td>
+
+```
+```
+
+</td>
+</tr>
+</table>
+
+` `
+
+### Cubes
+<table>
+<tr>
+  <th>Script name</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
+  <td>factory_craft</td><td>0 0 9</td><td>
+
+```
+```
+
+</td>
+</tr>
+</table>
+
+` `
+
+
+### Dense plates
+<table>
+<tr>
+  <th>Script name</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
+  <td>factory_craft</td><td>0 0 9</td><td>
+
+```
+```
+
+</td>
+</tr>
+</table>
+
+` `
+
+
+### Dust (tier up)
+<table>
+<tr>
+  <th>Script name</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
 <tr>
   <td>factory_craft</td><td>0 0 9</td><td>
 
@@ -432,36 +710,22 @@ b: craft1_state = craft1_state + 16
 
 
 
+## TODO
 
+<table>
+<tr>
+  <th>Script name</th>
+  <th>Lines</th>
+  <th>Code</th>
+</tr>
+<tr>
+  <td>factory_craft</td><td>0 0 9</td><td>
 
+```
+```
 
+</td>
+</tr>
+</table>
 
-
-## Production scripts
-
-FACTORY_CRAFT_2 (motor) - 6/6/8/12 lines
-`D0ZBQ1RPUllfQ1JBRlRfMgAAAAAAAAAABgAAAA5nbG9iYWwuaW50LnNldAhjb25zdGFudAQMY3JhZnQyX3N0YXRlCGNvbnN0YW50AgEAAAAPZ2VuZXJpYy5leGVjdXRlCGNvbnN0YW50BBZmYWN0b3J5X2NyYWZ0XzJfcGxhdGVzD2dlbmVyaWMuZXhlY3V0ZQhjb25zdGFudAQVZmFjdG9yeV9jcmFmdF8yX2NvaWxzD2dlbmVyaWMuZXhlY3V0ZQhjb25zdGFudAQUZmFjdG9yeV9jcmFmdF8yX3JvZHMRZ2VuZXJpYy53YWl0dW50aWwOY29tcGFyaXNvbi5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEDGNyYWZ0Ml9zdGF0ZQhjb25zdGFudAQCPT0IY29uc3RhbnQCDwAAAA1mYWN0b3J5LmNyYWZ0CGNvbnN0YW50BAVtb3Rvcg5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllchFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQ=`
-
-`FkZBQ1RPUllfQ1JBRlRfMl9wbGF0ZXMAAAAAAAAAAAYAAAAQbG9jYWwuZG91YmxlLnNldAhjb25zdGFudAQGdGFyZ2V0EWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBKghjb25zdGFudAMAAAAAAAAQQA5nZW5lcmljLmdvdG9pZghjb25zdGFudAIGAAAAEWNvbXBhcmlzb24uZG91YmxlE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBXBsYXRlDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAI+PRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAZ0YXJnZXQRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQHcHJlc3Nlcg9mYWN0b3J5LnByb2R1Y2UIY29uc3RhbnQEBWluZ290Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyEWFyaXRobWV0aWMuZG91YmxlEGxvY2FsLmRvdWJsZS5nZXQIY29uc3RhbnQEBnRhcmdldAhjb25zdGFudAQBLRNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAVwbGF0ZQ5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQHcHJlc3NlchFnZW5lcmljLndhaXR3aGlsZRZmYWN0b3J5Lm1hY2hpbmUuYWN0aXZlCGNvbnN0YW50BAdwcmVzc2VyDmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAxjcmFmdDJfc3RhdGUOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEDGNyYWZ0Ml9zdGF0ZQhjb25zdGFudAQBKwhjb25zdGFudAICAAAA`
-
-`FUZBQ1RPUllfQ1JBRlRfMl9jb2lscwAAAAAAAAAACAAAABBsb2NhbC5kb3VibGUuc2V0CGNvbnN0YW50BApuZWVkX2NvaWxzEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBKghjb25zdGFudAMAAAAAAADwPw5nZW5lcmljLmdvdG9pZghjb25zdGFudAIFAAAAEWNvbXBhcmlzb24uZG91YmxlE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBWNhYmxlDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAI+PRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BApuZWVkX2NvaWxzEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQECHJlZmluZXJ5D2ZhY3RvcnkucHJvZHVjZQhjb25zdGFudAQFaW5nb3QOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXILZG91YmxlLmNlaWwRYXJpdGhtZXRpYy5kb3VibGURYXJpdGhtZXRpYy5kb3VibGUQbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQKbmVlZF9jb2lscwhjb25zdGFudAQBLRNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAVjYWJsZQ5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQBLwhjb25zdGFudAMAAAAAAAAAQAhjb25zdGFudAQIcmVmaW5lcnkRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQIcmVmaW5lcnkPZmFjdG9yeS5wcm9kdWNlCGNvbnN0YW50BAVjYWJsZQ5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllchBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BApuZWVkX2NvaWxzCGNvbnN0YW50BAhyZWZpbmVyeRFnZW5lcmljLndhaXR3aGlsZRZmYWN0b3J5Lm1hY2hpbmUuYWN0aXZlCGNvbnN0YW50BAhyZWZpbmVyeQ5nbG9iYWwuaW50LnNldAhjb25zdGFudAQMY3JhZnQyX3N0YXRlDmFyaXRobWV0aWMuaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAxjcmFmdDJfc3RhdGUIY29uc3RhbnQEASsIY29uc3RhbnQCBAAAAA==`
-
-`FEZBQ1RPUllfQ1JBRlRfMl9yb2RzAAAAAAAAAAAMAAAAEGxvY2FsLmRvdWJsZS5zZXQIY29uc3RhbnQEC25lZWRfc2NyZXdzCmRvdWJsZS5tYXgIY29uc3RhbnQDAAAAAAAAAAARYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEtE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBXNjcmV3Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyEGxvY2FsLmRvdWJsZS5zZXQIY29uc3RhbnQECW5lZWRfcm9kcwpkb3VibGUubWF4CGNvbnN0YW50AwAAAAAAAAAAEWFyaXRobWV0aWMuZG91YmxlEWFyaXRobWV0aWMuZG91YmxlEWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBKghjb25zdGFudAMAAAAAAAAAQAhjb25zdGFudAQBKwtkb3VibGUuY2VpbBFhcml0aG1ldGljLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAtuZWVkX3NjcmV3cwhjb25zdGFudAQBLwhjb25zdGFudAMAAAAAAAAQQAhjb25zdGFudAQBLRNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BANyb2QOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCBwAAABFjb21wYXJpc29uLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAluZWVkX3JvZHMIY29uc3RhbnQEAj09CGNvbnN0YW50AwAAAAAAAAAAEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQEBnNoYXBlcg9mYWN0b3J5LnByb2R1Y2UIY29uc3RhbnQEBWluZ290Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyC2RvdWJsZS5jZWlsEWFyaXRobWV0aWMuZG91YmxlEGxvY2FsLmRvdWJsZS5nZXQIY29uc3RhbnQECW5lZWRfcm9kcwhjb25zdGFudAQBLwhjb25zdGFudAMAAAAAAAAAQAhjb25zdGFudAQGc2hhcGVyEWdlbmVyaWMud2FpdHVudGlsEWNvbXBhcmlzb24uZG91YmxlE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEA3JvZA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQCPj0RYXJpdGhtZXRpYy5kb3VibGUQbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQLbmVlZF9zY3Jld3MIY29uc3RhbnQEAS8IY29uc3RhbnQDAAAAAAAAEEAOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCCwAAABFjb21wYXJpc29uLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAtuZWVkX3NjcmV3cwhjb25zdGFudAQCPT0IY29uc3RhbnQDAAAAAAAAAAARZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQGY3V0dGVyD2ZhY3RvcnkucHJvZHVjZQhjb25zdGFudAQDcm9kDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyC2RvdWJsZS5jZWlsEWFyaXRobWV0aWMuZG91YmxlEGxvY2FsLmRvdWJsZS5nZXQIY29uc3RhbnQEC25lZWRfc2NyZXdzCGNvbnN0YW50BAEvCGNvbnN0YW50AwAAAAAAABBACGNvbnN0YW50BAZjdXR0ZXIRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQGY3V0dGVyEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQEBnNoYXBlcg5nbG9iYWwuaW50LnNldAhjb25zdGFudAQMY3JhZnQyX3N0YXRlDmFyaXRobWV0aWMuaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAxjcmFmdDJfc3RhdGUIY29uc3RhbnQEASsIY29uc3RhbnQCCAAAAA==`
-
-FACTORY_CRAFT_3 (pump) - 6/11/9 lines
-`D0ZBQ1RPUllfQ1JBRlRfMwAAAAAAAAAABgAAAA5nbG9iYWwuaW50LnNldAhjb25zdGFudAQMY3JhZnQzX3N0YXRlCGNvbnN0YW50AgEAAAATZ2VuZXJpYy5leGVjdXRlc3luYwhjb25zdGFudAQPZmFjdG9yeV9jcmFmdF8yD2dlbmVyaWMuZXhlY3V0ZQhjb25zdGFudAQWZmFjdG9yeV9jcmFmdF8zX3BsYXRlcw9nZW5lcmljLmV4ZWN1dGUIY29uc3RhbnQEFWZhY3RvcnlfY3JhZnRfM19yaW5ncxFnZW5lcmljLndhaXR1bnRpbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQMY3JhZnQyX3N0YXRlCGNvbnN0YW50BAI9PQhjb25zdGFudAIHAAAADWZhY3RvcnkuY3JhZnQIY29uc3RhbnQEBHB1bXAOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIRZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50`
-
-`FkZBQ1RPUllfQ1JBRlRfM19wbGF0ZXMAAAAAAAAAAAsAAAAQbG9jYWwuZG91YmxlLnNldAhjb25zdGFudAQGdGFyZ2V0EWFyaXRobWV0aWMuZG91YmxlEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudAhjb25zdGFudAQBKghjb25zdGFudAMAAAAAAAAAQA5nZW5lcmljLmdvdG9pZghjb25zdGFudAIGAAAAEWNvbXBhcmlzb24uZG91YmxlE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBXBsYXRlDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAI+PRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAZ0YXJnZXQRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQHcHJlc3Nlcg9mYWN0b3J5LnByb2R1Y2UIY29uc3RhbnQEBWluZ290Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyEWFyaXRobWV0aWMuZG91YmxlEGxvY2FsLmRvdWJsZS5nZXQIY29uc3RhbnQEBnRhcmdldAhjb25zdGFudAQBLRNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAVwbGF0ZQ5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQHcHJlc3NlchFnZW5lcmljLndhaXR3aGlsZRZmYWN0b3J5Lm1hY2hpbmUuYWN0aXZlCGNvbnN0YW50BAdwcmVzc2VyEGxvY2FsLmRvdWJsZS5zZXQIY29uc3RhbnQEBnRhcmdldBFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQIY29uc3RhbnQEASoIY29uc3RhbnQDAAAAAAAAEEAOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCCwAAABFjb21wYXJpc29uLmRvdWJsZRNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAxwbGF0ZS5ydWJiZXIIY29uc3RhbnQCAQAAAAhjb25zdGFudAQCPj0QbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQGdGFyZ2V0EWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQEB3ByZXNzZXIPZmFjdG9yeS5wcm9kdWNlCGNvbnN0YW50BAZydWJiZXIIY29uc3RhbnQCAQAAABFhcml0aG1ldGljLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAZ0YXJnZXQIY29uc3RhbnQEAS0TZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQMcGxhdGUucnViYmVyCGNvbnN0YW50AgEAAAAIY29uc3RhbnQEB3ByZXNzZXIRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQHcHJlc3Nlcg5nbG9iYWwuaW50LnNldAhjb25zdGFudAQMY3JhZnQzX3N0YXRlDmFyaXRobWV0aWMuaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAxjcmFmdDNfc3RhdGUIY29uc3RhbnQEASsIY29uc3RhbnQCAgAAAA==`
-
-`FUZBQ1RPUllfQ1JBRlRfM19yaW5ncwAAAAAAAAAACQAAABBsb2NhbC5kb3VibGUuc2V0CGNvbnN0YW50BAZ0YXJnZXQRYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEBWNvdW50CGNvbnN0YW50BAEqCGNvbnN0YW50AwAAAAAAAABADmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AgkAAAARY29tcGFyaXNvbi5kb3VibGUTZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQEcmluZw5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQCPj0QbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQGdGFyZ2V0DmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AgYAAAARY29tcGFyaXNvbi5kb3VibGUTZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQDcm9kDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAI+PRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAZ0YXJnZXQRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQGc2hhcGVyD2ZhY3RvcnkucHJvZHVjZQhjb25zdGFudAQFaW5nb3QOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXILZG91YmxlLmNlaWwRYXJpdGhtZXRpYy5kb3VibGURYXJpdGhtZXRpYy5kb3VibGUQbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQGdGFyZ2V0CGNvbnN0YW50BAEtE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEA3JvZA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQBLwhjb25zdGFudAMAAAAAAAAAQAhjb25zdGFudAQGc2hhcGVyEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQEBnNoYXBlcg9mYWN0b3J5LnByb2R1Y2UIY29uc3RhbnQEA3JvZA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllchFhcml0aG1ldGljLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAZ0YXJnZXQIY29uc3RhbnQEAS0TZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQEcmluZw5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQGc2hhcGVyEWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQEBnNoYXBlcg5nbG9iYWwuaW50LnNldAhjb25zdGFudAQMY3JhZnQyX3N0YXRlDmFyaXRobWV0aWMuaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAxjcmFmdDJfc3RhdGUIY29uc3RhbnQEASsIY29uc3RhbnQCBAAAAA==`
-
-FACTORY_CRAFT_4 (insulated cable) - 5/7/7 lines
-`D0ZBQ1RPUllfQ1JBRlRfNAAAAAAAAAAABQAAAA5nbG9iYWwuaW50LnNldAhjb25zdGFudAQMY3JhZnQ0X3N0YXRlCGNvbnN0YW50AgEAAAAPZ2VuZXJpYy5leGVjdXRlCGNvbnN0YW50BBZmYWN0b3J5X2NyYWZ0XzRfY2FibGVzD2dlbmVyaWMuZXhlY3V0ZQhjb25zdGFudAQWZmFjdG9yeV9jcmFmdF80X3J1YmJlchFnZW5lcmljLndhaXR1bnRpbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQMY3JhZnQ0X3N0YXRlCGNvbnN0YW50BAI9PQhjb25zdGFudAIHAAAADWZhY3RvcnkuY3JhZnQIY29uc3RhbnQED2NhYmxlLmluc3VsYXRlZA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllchFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQFY291bnQ=`
-
-`FkZBQ1RPUllfQ1JBRlRfNF9jYWJsZXMAAAAAAAAAAAcAAAAQbG9jYWwuZG91YmxlLnNldAhjb25zdGFudAQGdGFyZ2V0CmRvdWJsZS5tYXgKZG91YmxlLm1heAhjb25zdGFudAMAAAAAAADwPxFhcml0aG1ldGljLmRvdWJsZQNpMmQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAS0IY29uc3RhbnQDAAAAAAAAAEAKZG91YmxlLm1heBFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMAAAAAAAAkQAhjb25zdGFudAQBLRFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMAAAAAAAAUQAhjb25zdGFudAQBKhFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZQNpMmQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAS0IY29uc3RhbnQDAAAAAAAAIEAIY29uc3RhbnQEA3Bvdwhjb25zdGFudAMAAAAAAAAAQAtkb3VibGUuY2VpbBFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZQNpMmQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAS0IY29uc3RhbnQDAAAAAAAA8D8IY29uc3RhbnQEA3Bvdwhjb25zdGFudAMAAAAAAAD4Pwhjb25zdGFudAQBLQhjb25zdGFudAMAAAAAAAAmQBBsb2NhbC5kb3VibGUuc2V0CGNvbnN0YW50BAZ0YXJnZXQRYXJpdGhtZXRpYy5kb3VibGUQbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQGdGFyZ2V0CGNvbnN0YW50BAEqEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudA5nZW5lcmljLmdvdG9pZghjb25zdGFudAIHAAAAEWNvbXBhcmlzb24uZG91YmxlE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEBWNhYmxlDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAI+PRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAZ0YXJnZXQRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQIcmVmaW5lcnkPZmFjdG9yeS5wcm9kdWNlCGNvbnN0YW50BAVpbmdvdA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcgtkb3VibGUuY2VpbBFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAZ0YXJnZXQIY29uc3RhbnQEAS0TZmFjdG9yeS5pdGVtcy5jb3VudAhjb25zdGFudAQFY2FibGUOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEBHRpZXIIY29uc3RhbnQEAS8IY29uc3RhbnQDAAAAAAAAAEAIY29uc3RhbnQECHJlZmluZXJ5EWdlbmVyaWMud2FpdHdoaWxlFmZhY3RvcnkubWFjaGluZS5hY3RpdmUIY29uc3RhbnQECHJlZmluZXJ5Dmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAxjcmFmdDRfc3RhdGUOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEDGNyYWZ0NF9zdGF0ZQhjb25zdGFudAQBKwhjb25zdGFudAICAAAA`
-
-`FkZBQ1RPUllfQ1JBRlRfNF9ydWJiZXIAAAAAAAAAAAcAAAAQbG9jYWwuZG91YmxlLnNldAhjb25zdGFudAQGdGFyZ2V0CmRvdWJsZS5tYXgIY29uc3RhbnQDAAAAAAAAAAARYXJpdGhtZXRpYy5kb3VibGURYXJpdGhtZXRpYy5kb3VibGURYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDAAAAAAAAAEAIY29uc3RhbnQEASoDaTJkDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAEtCGNvbnN0YW50AwAAAAAAABBACGNvbnN0YW50BAEtCmRvdWJsZS5tYXgIY29uc3RhbnQDAAAAAAAAAAARYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDAAAAAAAAAEAIY29uc3RhbnQEAS0RYXJpdGhtZXRpYy5kb3VibGURYXJpdGhtZXRpYy5kb3VibGUDaTJkDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAR0aWVyCGNvbnN0YW50BAEtCGNvbnN0YW50AwAAAAAAACBACGNvbnN0YW50BAEqEWFyaXRobWV0aWMuZG91YmxlA2kyZA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQEdGllcghjb25zdGFudAQBLQhjb25zdGFudAMAAAAAAAAiQBBsb2NhbC5kb3VibGUuc2V0CGNvbnN0YW50BAZ0YXJnZXQRYXJpdGhtZXRpYy5kb3VibGUQbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQGdGFyZ2V0CGNvbnN0YW50BAEqEWdsb2JhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAVjb3VudA5nZW5lcmljLmdvdG9pZghjb25zdGFudAIHAAAAEWNvbXBhcmlzb24uZG91YmxlE2ZhY3RvcnkuaXRlbXMuY291bnQIY29uc3RhbnQEDHBsYXRlLnJ1YmJlcghjb25zdGFudAIBAAAACGNvbnN0YW50BAI+PRBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BAZ0YXJnZXQRZ2VuZXJpYy53YWl0d2hpbGUWZmFjdG9yeS5tYWNoaW5lLmFjdGl2ZQhjb25zdGFudAQHcHJlc3Nlcg9mYWN0b3J5LnByb2R1Y2UIY29uc3RhbnQEBnJ1YmJlcghjb25zdGFudAIBAAAAEWFyaXRobWV0aWMuZG91YmxlEGxvY2FsLmRvdWJsZS5nZXQIY29uc3RhbnQEBnRhcmdldAhjb25zdGFudAQBLRNmYWN0b3J5Lml0ZW1zLmNvdW50CGNvbnN0YW50BAxwbGF0ZS5ydWJiZXIIY29uc3RhbnQCAQAAAAhjb25zdGFudAQHcHJlc3NlchFnZW5lcmljLndhaXR3aGlsZRZmYWN0b3J5Lm1hY2hpbmUuYWN0aXZlCGNvbnN0YW50BAdwcmVzc2VyDmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAxjcmFmdDRfc3RhdGUOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEDGNyYWZ0NF9zdGF0ZQhjb25zdGFudAQBKwhjb25zdGFudAIEAAAA`
-
-FACTORY_CRAFT_5 (dense plate)
-`TODO`
-
+` `
