@@ -1,6 +1,6 @@
 # Mining scripts
 
-These scripts are slightly modified from discord user Xenos#2117, that dig all layers in the mine in about 13 seconds.
+These scripts are directly inspired by those from discord user Xenos#2117.  Running these scripts requires nearly 90 simultaneous scripts running so you can't be doing much else when you invoke the launcher.  It also requires a nearly fully upgraded set of servers, the largest script here is 19 actions.  From invocation it will clear the mine in a few seconds.
 
 <table>
 <tr>
@@ -10,102 +10,82 @@ These scripts are slightly modified from discord user Xenos#2117, that dig all l
   <th>Code</th>
 </tr>
 <tr>
-  <td>Mine ALL</td><td>0</td><td>1 1 16</td><td>
+  <td>paralaunch</td><td>0</td><td>1 1 9</td><td>
 
 ```
-:local int id
+:global int paracell
+:global int unparaleash
+:local int sets
 
 key.0()
 
 isopen("mine")
 
-	click(vec(0.44 * i2d(width()), 0.75 * i2d(height())))
-	click(vec(0.44 * i2d(width()), 0.75 * i2d(height())))
-	global.int.set("arg cell", -2)
-	execute("launch superdrill")
-	execute("launch superdrill")
-	execute("launch superdrill")
-	executesync("launch superdrill")
-	execute("newlayer")
-nexttab: click(vec((0.52 + (0.09 * i2d(id % 5))) * i2d(width()), 0.75 * i2d(height())))
-	id = id + 1
-	gotoif(skipclick, (id % 5) != 0)
-	click(vec(0.95 * i2d(width()), 0.75 * i2d(height())))
-skipclick: wait(0.6)
-	global.int.set("time wasted", global.int.get("time wasted") + 1)
-	gotoif(nexttab, id < 12)
-	executesync("stop superdrill")
+unparaleash = 0
+
+execute("paratab")
+loop: execute("paralayer")
+      execute("paracell1")
+      paracell = 0
+      sets = sets + 1
+      waituntil(paracell == 3)
+gotoif(loop, sets < 5)
+
+unparaleash = 1
 ```
 
 </td>
 </tr>
 </table>
 
-`CE1pbmUgQUxMAQAAAAVrZXkuMAEAAAASdG93bi53aW5kb3cuaXNvcGVuCGNvbnN0YW50BARtaW5lEAAAAA1nZW5lcmljLmNsaWNrDnZlYy5mcm9tQ29vcmRzEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50Aylcj8L1KNw/CGNvbnN0YW50BAEqA2kyZAxzY3JlZW4ud2lkdGgRYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDAAAAAAAA6D8IY29uc3RhbnQEASoDaTJkDXNjcmVlbi5oZWlnaHQNZ2VuZXJpYy5jbGljaw52ZWMuZnJvbUNvb3JkcxFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMpXI/C9SjcPwhjb25zdGFudAQBKgNpMmQMc2NyZWVuLndpZHRoEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50AwAAAAAAAOg/CGNvbnN0YW50BAEqA2kyZA1zY3JlZW4uaGVpZ2h0Dmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAhhcmcgY2VsbAhjb25zdGFudAL+////D2dlbmVyaWMuZXhlY3V0ZQhjb25zdGFudAQRbGF1bmNoIHN1cGVyZHJpbGwPZ2VuZXJpYy5leGVjdXRlCGNvbnN0YW50BBFsYXVuY2ggc3VwZXJkcmlsbA9nZW5lcmljLmV4ZWN1dGUIY29uc3RhbnQEEWxhdW5jaCBzdXBlcmRyaWxsE2dlbmVyaWMuZXhlY3V0ZXN5bmMIY29uc3RhbnQEEWxhdW5jaCBzdXBlcmRyaWxsD2dlbmVyaWMuZXhlY3V0ZQhjb25zdGFudAQIbmV3bGF5ZXINZ2VuZXJpYy5jbGljaw52ZWMuZnJvbUNvb3JkcxFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAOkcD0K16PgPwhjb25zdGFudAQBKxFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMK16NwPQq3Pwhjb25zdGFudAQBKgNpMmQOYXJpdGhtZXRpYy5pbnQNbG9jYWwuaW50LmdldAhjb25zdGFudAQCaWQIY29uc3RhbnQEA21vZAhjb25zdGFudAIFAAAACGNvbnN0YW50BAEqA2kyZAxzY3JlZW4ud2lkdGgRYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDAAAAAAAA6D8IY29uc3RhbnQEASoDaTJkDXNjcmVlbi5oZWlnaHQNbG9jYWwuaW50LnNldAhjb25zdGFudAQCaWQOYXJpdGhtZXRpYy5pbnQNbG9jYWwuaW50LmdldAhjb25zdGFudAQCaWQIY29uc3RhbnQEASsIY29uc3RhbnQCAQAAAA5nZW5lcmljLmdvdG9pZghjb25zdGFudAINAAAADmNvbXBhcmlzb24uaW50DmFyaXRobWV0aWMuaW50DWxvY2FsLmludC5nZXQIY29uc3RhbnQEAmlkCGNvbnN0YW50BANtb2QIY29uc3RhbnQCBQAAAAhjb25zdGFudAQCIT0IY29uc3RhbnQCAAAAAA1nZW5lcmljLmNsaWNrDnZlYy5mcm9tQ29vcmRzEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50A2ZmZmZmZu4/CGNvbnN0YW50BAEqA2kyZAxzY3JlZW4ud2lkdGgRYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDAAAAAAAA6D8IY29uc3RhbnQEASoDaTJkDXNjcmVlbi5oZWlnaHQMZ2VuZXJpYy53YWl0CGNvbnN0YW50AzMzMzMzM+M/Dmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAt0aW1lIHdhc3RlZA5hcml0aG1ldGljLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQLdGltZSB3YXN0ZWQIY29uc3RhbnQEASsIY29uc3RhbnQCAQAAAA5nZW5lcmljLmdvdG9pZghjb25zdGFudAIJAAAADmNvbXBhcmlzb24uaW50DWxvY2FsLmludC5nZXQIY29uc3RhbnQEAmlkCGNvbnN0YW50BAE8CGNvbnN0YW50AgwAAAATZ2VuZXJpYy5leGVjdXRlc3luYwhjb25zdGFudAQPc3RvcCBzdXBlcmRyaWxs`
+`CnBhcmFsYXVuY2gBAAAABWtleS4wAQAAABJ0b3duLndpbmRvdy5pc29wZW4IY29uc3RhbnQEBG1pbmUJAAAADmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAt1bnBhcmFsZWFzaAhjb25zdGFudAIAAAAAD2dlbmVyaWMuZXhlY3V0ZQhjb25zdGFudAQHcGFyYXRhYg9nZW5lcmljLmV4ZWN1dGUIY29uc3RhbnQECXBhcmFsYXllcg9nZW5lcmljLmV4ZWN1dGUIY29uc3RhbnQECXBhcmFjZWxsMQ5nbG9iYWwuaW50LnNldAhjb25zdGFudAQIcGFyYWNlbGwIY29uc3RhbnQCAAAAAA1sb2NhbC5pbnQuc2V0CGNvbnN0YW50BARzZXRzDmFyaXRobWV0aWMuaW50DWxvY2FsLmludC5nZXQIY29uc3RhbnQEBHNldHMIY29uc3RhbnQEASsIY29uc3RhbnQCAQAAABFnZW5lcmljLndhaXR1bnRpbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQIcGFyYWNlbGwIY29uc3RhbnQEAj09CGNvbnN0YW50AgMAAAAOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCAwAAAA5jb21wYXJpc29uLmludA1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARzZXRzCGNvbnN0YW50BAE8CGNvbnN0YW50AgUAAAAOZ2xvYmFsLmludC5zZXQIY29uc3RhbnQEC3VucGFyYWxlYXNoCGNvbnN0YW50AgEAAAA=`
 
 <table>
 <tr>
-  <td>launch superdrill</td><td>0 0 4</td><td>
+  <td>paratab</td><td>0 0 19</td><td>
 
 ```
-loop: global.int.set("time wasted", global.int.get("time wasted") + 1)
-    global.int.set("arg cell", global.int.get("arg cell") + 1)
-    execute("minecell")
-    gotoif(loop, global.int.get("arg cell") < 30)
+:global int unparaleash
+:local int id
+
+click(vec(0.44 * i2d(width()), 0.75 * i2d(height())))
+click(vec(0.44 * i2d(width()), 0.75 * i2d(height())))
+waituntil(unparaleash == 1)
+
+loop: click(vec((0.52 + 0.09 * 0) * i2d(width()), 0.75 * i2d(height())))
+id = id + 1
+      click(vec((0.52 + 0.09 * 1) * i2d(width()), 0.75 * i2d(height())))
+gotoif(end, id > 2)
+      click(vec((0.52 + 0.09 * 2) * i2d(width()), 0.75 * i2d(height())))
+id = id ; no-op
+      click(vec((0.52 + 0.09 * 3) * i2d(width()), 0.75 * i2d(height())))
+id = id ; no-op
+      click(vec((0.52 + 0.09 * 4) * i2d(width()), 0.75 * i2d(height())))
+  click(vec(0.95 * i2d(width()), 0.75 * i2d(height())))
+goto(loop)
+end: stop("paralayer")
+     stop("paracell1")
+     stop("paracell2")
+     stop("paracell3")
+     stop("paracell4")
+
 ```
 
 </td>
 </tr>
 </table>
 
-`EWxhdW5jaCBzdXBlcmRyaWxsAAAAAAAAAAAEAAAADmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAt0aW1lIHdhc3RlZA5hcml0aG1ldGljLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQLdGltZSB3YXN0ZWQIY29uc3RhbnQEASsIY29uc3RhbnQCAQAAAA5nbG9iYWwuaW50LnNldAhjb25zdGFudAQIYXJnIGNlbGwOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECGFyZyBjZWxsCGNvbnN0YW50BAErCGNvbnN0YW50AgEAAAAPZ2VuZXJpYy5leGVjdXRlCGNvbnN0YW50BAhtaW5lY2VsbA5nZW5lcmljLmdvdG9pZghjb25zdGFudAIBAAAADmNvbXBhcmlzb24uaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAhhcmcgY2VsbAhjb25zdGFudAQBPAhjb25zdGFudAIeAAAA`
+`B3BhcmF0YWIAAAAAAAAAABMAAAANZ2VuZXJpYy5jbGljaw52ZWMuZnJvbUNvb3JkcxFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMpXI/C9SjcPwhjb25zdGFudAQBKgNpMmQMc2NyZWVuLndpZHRoEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50AwAAAAAAAOg/CGNvbnN0YW50BAEqA2kyZA1zY3JlZW4uaGVpZ2h0DWdlbmVyaWMuY2xpY2sOdmVjLmZyb21Db29yZHMRYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDKVyPwvUo3D8IY29uc3RhbnQEASoDaTJkDHNjcmVlbi53aWR0aBFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMAAAAAAADoPwhjb25zdGFudAQBKgNpMmQNc2NyZWVuLmhlaWdodBFnZW5lcmljLndhaXR1bnRpbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQLdW5wYXJhbGVhc2gIY29uc3RhbnQEAj09CGNvbnN0YW50AgEAAAANZ2VuZXJpYy5jbGljaw52ZWMuZnJvbUNvb3JkcxFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAOkcD0K16PgPwhjb25zdGFudAQBKgNpMmQMc2NyZWVuLndpZHRoEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50AwAAAAAAAOg/CGNvbnN0YW50BAEqA2kyZA1zY3JlZW4uaGVpZ2h0DWxvY2FsLmludC5zZXQIY29uc3RhbnQEAmlkDmFyaXRobWV0aWMuaW50DWxvY2FsLmludC5nZXQIY29uc3RhbnQEAmlkCGNvbnN0YW50BAErCGNvbnN0YW50AgEAAAANZ2VuZXJpYy5jbGljaw52ZWMuZnJvbUNvb3JkcxFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAOF61G4HoXjPwhjb25zdGFudAQBKgNpMmQMc2NyZWVuLndpZHRoEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50AwAAAAAAAOg/CGNvbnN0YW50BAEqA2kyZA1zY3JlZW4uaGVpZ2h0DmdlbmVyaWMuZ290b2lmCGNvbnN0YW50Ag8AAAAOY29tcGFyaXNvbi5pbnQNbG9jYWwuaW50LmdldAhjb25zdGFudAQCaWQIY29uc3RhbnQEAT4IY29uc3RhbnQCAgAAAA1nZW5lcmljLmNsaWNrDnZlYy5mcm9tQ29vcmRzEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50A2ZmZmZmZuY/CGNvbnN0YW50BAEqA2kyZAxzY3JlZW4ud2lkdGgRYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDAAAAAAAA6D8IY29uc3RhbnQEASoDaTJkDXNjcmVlbi5oZWlnaHQNbG9jYWwuaW50LnNldAhjb25zdGFudAQCaWQNbG9jYWwuaW50LmdldAhjb25zdGFudAQCaWQNZ2VuZXJpYy5jbGljaw52ZWMuZnJvbUNvb3JkcxFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudANI4XoUrkfpPwhjb25zdGFudAQBKgNpMmQMc2NyZWVuLndpZHRoEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50AwAAAAAAAOg/CGNvbnN0YW50BAEqA2kyZA1zY3JlZW4uaGVpZ2h0DWxvY2FsLmludC5zZXQIY29uc3RhbnQEAmlkDWxvY2FsLmludC5nZXQIY29uc3RhbnQEAmlkDWdlbmVyaWMuY2xpY2sOdmVjLmZyb21Db29yZHMRYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDKVyPwvUo7D8IY29uc3RhbnQEASoDaTJkDHNjcmVlbi53aWR0aBFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMAAAAAAADoPwhjb25zdGFudAQBKgNpMmQNc2NyZWVuLmhlaWdodA1nZW5lcmljLmNsaWNrDnZlYy5mcm9tQ29vcmRzEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50A2ZmZmZmZu4/CGNvbnN0YW50BAEqA2kyZAxzY3JlZW4ud2lkdGgRYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDAAAAAAAA6D8IY29uc3RhbnQEASoDaTJkDXNjcmVlbi5oZWlnaHQMZ2VuZXJpYy5nb3RvCGNvbnN0YW50AgQAAAAMZ2VuZXJpYy5zdG9wCGNvbnN0YW50BAlwYXJhbGF5ZXIMZ2VuZXJpYy5zdG9wCGNvbnN0YW50BAlwYXJhY2VsbDEMZ2VuZXJpYy5zdG9wCGNvbnN0YW50BAlwYXJhY2VsbDIMZ2VuZXJpYy5zdG9wCGNvbnN0YW50BAlwYXJhY2VsbDMMZ2VuZXJpYy5zdG9wCGNvbnN0YW50BAlwYXJhY2VsbDQ=`
 
 <table>
 <tr>
-  <td>stop superdrill</td><td>1 1 3</td><td>
+  <td>paralayer</td><td>0 0 12</td><td>
 
 ```
-key.9()
+:global int unparaleash
 
-isopen("mine")
+waituntil(unparaleash == 1)
 
-stop("launch superdrill")
-stop("minecell")
-stop("newlayer")
-```
-
-</td>
-</tr>
-</table>
-
-`D3N0b3Agc3VwZXJkcmlsbAEAAAAFa2V5LjkBAAAAEnRvd24ud2luZG93Lmlzb3Blbghjb25zdGFudAQEbWluZQMAAAAMZ2VuZXJpYy5zdG9wCGNvbnN0YW50BBFsYXVuY2ggc3VwZXJkcmlsbAxnZW5lcmljLnN0b3AIY29uc3RhbnQECG1pbmVjZWxsDGdlbmVyaWMuc3RvcAhjb25zdGFudAQIbmV3bGF5ZXI=`
-
-<table>
-<tr>
-  <td>minecell</td><td>0 0 3</td><td>
-
-```
-:local int cell
-
-    cell = global.int.get("arg cell") / 2
-dig: dig(cell % 4, cell / 4)
-    gotoif(dig, cell >= 0)
-```
-
-</td>
-</tr>
-</table>
-
-`
-0 0 3
-CG1pbmVjZWxsAAAAAAAAAAADAAAADWxvY2FsLmludC5zZXQIY29uc3RhbnQEBGNlbGwOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECGFyZyBjZWxsCGNvbnN0YW50BAEvCGNvbnN0YW50AgIAAAAIbWluZS5kaWcOYXJpdGhtZXRpYy5pbnQNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAQDbW9kCGNvbnN0YW50AgQAAAAOYXJpdGhtZXRpYy5pbnQNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAQBLwhjb25zdGFudAIEAAAADmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AgIAAAAOY29tcGFyaXNvbi5pbnQNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAQCPj0IY29uc3RhbnQCAAAAAA==`
-
-<table>
-<tr>
-  <td>newlayer</td><td>0 0 12</td><td>
-
-```
-    wait(0.0)
 loop: newlayer()
     newlayer()
     newlayer()
@@ -116,11 +96,142 @@ loop: newlayer()
     newlayer()
     newlayer()
     newlayer()
-    goto(loop)
+goto(loop)
 ```
 
 </td>
 </tr>
 </table>
 
-`CG5ld2xheWVyAAAAAAAAAAAMAAAADGdlbmVyaWMud2FpdAhjb25zdGFudAMAAAAAAAAAAA1taW5lLm5ld2xheWVyDW1pbmUubmV3bGF5ZXINbWluZS5uZXdsYXllcg1taW5lLm5ld2xheWVyDW1pbmUubmV3bGF5ZXINbWluZS5uZXdsYXllcg1taW5lLm5ld2xheWVyDW1pbmUubmV3bGF5ZXINbWluZS5uZXdsYXllcg1taW5lLm5ld2xheWVyDGdlbmVyaWMuZ290bwhjb25zdGFudAICAAAA`
+`CXBhcmFsYXllcgAAAAAAAAAADAAAABFnZW5lcmljLndhaXR1bnRpbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQLdW5wYXJhbGVhc2gIY29uc3RhbnQEAj09CGNvbnN0YW50AgEAAAANbWluZS5uZXdsYXllcg1taW5lLm5ld2xheWVyDW1pbmUubmV3bGF5ZXINbWluZS5uZXdsYXllcg1taW5lLm5ld2xheWVyDW1pbmUubmV3bGF5ZXINbWluZS5uZXdsYXllcg1taW5lLm5ld2xheWVyDW1pbmUubmV3bGF5ZXINbWluZS5uZXdsYXllcgxnZW5lcmljLmdvdG8IY29uc3RhbnQCAgAAAA==`
+
+<table>
+<tr>
+  <td>paracell1</td><td>0 0 17</td><td>
+
+```
+:global int paracell
+:global int unparaleash
+:local int cell
+
+execute("paracell2")
+cell = paracell
+gotoif(wait, cell > 1)
+child: execute("paracell1")
+gotoif(child, paracell < 2)
+wait: waituntil(unparaleash == 1)
+
+loop: dig(cell, 0)
+    dig(cell, 0)
+    dig(cell, 0)
+    dig(cell, 0)
+    dig(cell, 0)
+    dig(cell, 0)
+    dig(cell, 0)
+    dig(cell, 0)
+    dig(cell, 0)
+    dig(cell, 0)
+goto(loop)
+```
+
+</td>
+</tr>
+</table>
+
+`CXBhcmFjZWxsMQAAAAAAAAAAEQAAAA9nZW5lcmljLmV4ZWN1dGUIY29uc3RhbnQECXBhcmFjZWxsMg1sb2NhbC5pbnQuc2V0CGNvbnN0YW50BARjZWxsDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAhwYXJhY2VsbA5nZW5lcmljLmdvdG9pZghjb25zdGFudAIGAAAADmNvbXBhcmlzb24uaW50DWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQEAT4IY29uc3RhbnQCAQAAAA9nZW5lcmljLmV4ZWN1dGUIY29uc3RhbnQECXBhcmFjZWxsMQ5nZW5lcmljLmdvdG9pZghjb25zdGFudAIEAAAADmNvbXBhcmlzb24uaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAhwYXJhY2VsbAhjb25zdGFudAQBPAhjb25zdGFudAICAAAAEWdlbmVyaWMud2FpdHVudGlsDmNvbXBhcmlzb24uaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAt1bnBhcmFsZWFzaAhjb25zdGFudAQCPT0IY29uc3RhbnQCAQAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgAAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIAAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAAAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgAAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIAAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAAAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgAAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIAAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAAAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgAAAAAMZ2VuZXJpYy5nb3RvCGNvbnN0YW50AgcAAAA=`
+
+<table>
+<tr>
+  <td>paracell2</td><td>0 0 14</td><td>
+
+```
+:global int paracell
+:global int unparaleash
+:local int cell
+
+execute("paracell3")
+cell = paracell
+wait: waituntil(unparaleash == 1)
+
+loop: dig(cell, 1)
+    dig(cell, 1)
+    dig(cell, 1)
+    dig(cell, 1)
+    dig(cell, 1)
+    dig(cell, 1)
+    dig(cell, 1)
+    dig(cell, 1)
+    dig(cell, 1)
+    dig(cell, 1)
+goto(loop)
+```
+
+</td>
+</tr>
+</table>
+
+`CXBhcmFjZWxsMgAAAAAAAAAADgAAAA9nZW5lcmljLmV4ZWN1dGUIY29uc3RhbnQECXBhcmFjZWxsMw1sb2NhbC5pbnQuc2V0CGNvbnN0YW50BARjZWxsDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAhwYXJhY2VsbBFnZW5lcmljLndhaXR1bnRpbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQLdW5wYXJhbGVhc2gIY29uc3RhbnQEAj09CGNvbnN0YW50AgEAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIBAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAQAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgEAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIBAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAQAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgEAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIBAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAQAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgEAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIBAAAADGdlbmVyaWMuZ290bwhjb25zdGFudAIEAAAA`
+
+<table>
+<tr>
+  <td>paracell3</td><td>0 0 14</td><td>
+
+```
+:global int paracell
+:global int unparaleash
+:local int cell
+
+execute("paracell4")
+cell = paracell
+wait: waituntil(unparaleash == 1)
+
+loop: dig(cell, 2)
+    dig(cell, 2)
+    dig(cell, 2)
+    dig(cell, 2)
+    dig(cell, 2)
+    dig(cell, 2)
+    dig(cell, 2)
+    dig(cell, 2)
+    dig(cell, 2)
+    dig(cell, 2)
+goto(loop)
+```
+
+</td>
+</tr>
+</table>
+
+`CXBhcmFjZWxsMwAAAAAAAAAADgAAAA9nZW5lcmljLmV4ZWN1dGUIY29uc3RhbnQECXBhcmFjZWxsNA1sb2NhbC5pbnQuc2V0CGNvbnN0YW50BARjZWxsDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAhwYXJhY2VsbBFnZW5lcmljLndhaXR1bnRpbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQLdW5wYXJhbGVhc2gIY29uc3RhbnQEAj09CGNvbnN0YW50AgEAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAICAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAgAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgIAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAICAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAgAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgIAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAICAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAgAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgIAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAICAAAADGdlbmVyaWMuZ290bwhjb25zdGFudAIEAAAA`
+
+<table>
+<tr>
+  <td>paracell4</td><td>0 0 14</td><td>
+
+```
+:global int paracell
+:global int unparaleash
+:local int cell
+
+paracell = paracell + 1
+cell = paracell
+wait: waituntil(unparaleash == 1)
+
+loop: dig(cell, 3)
+    dig(cell, 3)
+    dig(cell, 3)
+    dig(cell, 3)
+    dig(cell, 3)
+    dig(cell, 3)
+    dig(cell, 3)
+    dig(cell, 3)
+    dig(cell, 3)
+    dig(cell, 3)
+goto(loop)
+```
+
+</td>
+</tr>
+</table>
+
+`CXBhcmFjZWxsNAAAAAAAAAAADgAAAA5nbG9iYWwuaW50LnNldAhjb25zdGFudAQIcGFyYWNlbGwOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECHBhcmFjZWxsCGNvbnN0YW50BAErCGNvbnN0YW50AgEAAAANbG9jYWwuaW50LnNldAhjb25zdGFudAQEY2VsbA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQIcGFyYWNlbGwRZ2VuZXJpYy53YWl0dW50aWwOY29tcGFyaXNvbi5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEC3VucGFyYWxlYXNoCGNvbnN0YW50BAI9PQhjb25zdGFudAIBAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAwAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgMAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIDAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAwAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgMAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIDAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAwAAAAhtaW5lLmRpZw1sb2NhbC5pbnQuZ2V0CGNvbnN0YW50BARjZWxsCGNvbnN0YW50AgMAAAAIbWluZS5kaWcNbG9jYWwuaW50LmdldAhjb25zdGFudAQEY2VsbAhjb25zdGFudAIDAAAACG1pbmUuZGlnDWxvY2FsLmludC5nZXQIY29uc3RhbnQEBGNlbGwIY29uc3RhbnQCAwAAAAxnZW5lcmljLmdvdG8IY29uc3RhbnQCBAAAAA==`
