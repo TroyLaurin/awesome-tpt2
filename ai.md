@@ -8,7 +8,7 @@ See https://www.perfecttower2.com/wiki/AI for a high level description.
 
 - [Overview](#overview)
 - [Miscellaneous](#miscellaneous)
-- [New round](#game-automation)
+- [New round](#new-round)
 - [Power plant](#power-plant)
 - [Mine](#mine)
 - [Factory](#factory)
@@ -25,6 +25,8 @@ The AI can run up to 100 scripts and hold 100 global variables at once.  If you 
 
 When importing scripts, they are disabled by default<a name="footnote-3-ref"></a><sup>[3](#footnote-3)</sup>.  After importing, select the script, tick the enabled box and hit save to enable the script to be run, using any defined impulses in the script once the AI is running (F4 by default)
 
+- [Tips for running multiple copies of a script](https://discord.com/channels/488444879836413975/783731338304946217/798604851835174942)
+
 ## Miscellaneous
 
 - [External script editor](https://kyromyr.github.io/perfect-tower/) can be easier to use to create complex scripts.
@@ -34,7 +36,6 @@ When importing scripts, they are disabled by default<a name="footnote-3-ref"></a
 - [In-game macro recorder](https://discord.com/channels/488444879836413975/783731338304946217/786467731137363984)
 - [Trying to find the screen resolution](https://discord.com/channels/488444879836413975/783731338304946217/792239175981334538) - before it was available in-game
 - [A bunch of relative coordinates](https://discord.com/channels/488444879836413975/783731338304946217/792256274145345608)
-
 
 ## New round
 These scripts are useful in the "main" tower defense section of the game
