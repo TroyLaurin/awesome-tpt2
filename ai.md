@@ -21,9 +21,9 @@ See https://www.perfecttower2.com/wiki/AI for a high level description.
 
 ## Overview
 (game version: 0.6.6b2)
-The AI can run up to 100 scripts and hold 100 global variables at once.  If you attempt to run too many scripts the AI will shut down, stopping all running scripts.    Each running script executes a single instruction per tick<sup>[1](#footnote-1)</sup>, in the order that the scripts were launched.  The first line of each script will be executed in the same tick as the script was launched<sup>[2](#footnote-2)</sup>, which can be used to start many scripts in a single tick.  If multiple scripts are launched by the same impulse, the scripts will be launched in the order that they appear in the AI list (defined by the order in which the scripts were created, currently not easily reorder-able).
+The AI can run up to 100 scripts and hold 100 global variables at once.  If you attempt to run too many scripts the AI will shut down, stopping all running scripts.    Each running script executes a single instruction per tick<a name="footnote-1-ref"></a><sup>[1](#footnote-1)</sup>, in the order that the scripts were launched.  The first line of each script will be executed in the same tick as the script was launched<a name="footnote-2-ref"></a><sup>[2](#footnote-2)</sup>, which can be used to start many scripts in a single tick.  If multiple scripts are launched by the same impulse, the scripts will be launched in the order that they appear in the AI list (defined by the order in which the scripts were created, currently not easily reorder-able).
 
-When importing scripts, they are disabled by default<sup>[3](#footnote-3)</sup>.  After importing, select the script, tick the enabled box and hit save to enable the script to be run, using any defined impulses in the script once the AI is running (F4 by default)
+When importing scripts, they are disabled by default<a name="footnote-3-ref"></a><sup>[3](#footnote-3)</sup>.  After importing, select the script, tick the enabled box and hit save to enable the script to be run, using any defined impulses in the script once the AI is running (F4 by default)
 
 ## Miscellaneous
 
@@ -99,6 +99,6 @@ Scripts that aren't necessarily about playing the base game, but add something f
 
 ## Footnotes
 
-1. <a name="footnote-1"></a> https://discord.com/channels/488444879836413975/783026949715001364/788339004012494878
-2. <a name="footnote-2"></a> https://discord.com/channels/488444879836413975/783731338304946217/793603392920223785
-3. <a name="footnote-3"></a> https://discord.com/channels/488444879836413975/783731338304946217/792901138361745429
+1. <a name="footnote-1"></a> https://discord.com/channels/488444879836413975/783026949715001364/788339004012494878 [^](#footnote-1-ref)
+2. <a name="footnote-2"></a> https://discord.com/channels/488444879836413975/783731338304946217/793603392920223785 [^](#footnote-2-ref)
+3. <a name="footnote-3"></a> https://discord.com/channels/488444879836413975/783731338304946217/792901138361745429 [^](#footnote-3-ref)
