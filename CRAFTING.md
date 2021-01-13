@@ -5,8 +5,10 @@
 This is a combination of global utility scripts that let you choose what you want to do, plus the crafting scripts which execute your choice.  Note that crafting assumes that you have enough ingots of the correct tiers to build what you want, and will stop before completing the output if you don't have enough ingots.  If you craft more ingots and start construction again then it should pick up where it left off without crafting extra waste products.
 
 1. Choose the TIER you want to produce with '1' (loops from 1 to 10)
-2. Choose the MODE with '2' and OUTPUT with '3'.  Refer to the following table to see what will be produced:
-   Optionally, when in **producer** mode, you can hit '4' while in the building corresponding to the producer you want to craft, or when in **machine** mode you can hit '4' with the mouse cursor over the machine you want to craft in the machines tab in the factory.
+2. Choose the MODE with '2' and OUTPUT with '3'.  Refer to the following table to see what will be produced.
+3. Choose the COUNT of items you want to produce with '8' to count down and '9' to count up.  Counts up from 1-10, then 20, 30... 90, 100, then 200, 300 etc
+4. Optionally choose whether to craft ALL items for the desired output (`CRAFT_PRESERVATION = 0.0`) or to use up components that are already in your inventory when crafting the output (`CRAFT_PRESERVATION = 1.0`) - toggled with '4'.
+5. Hit '0' while in the factory to start production.
 
 | MODE | 1 (producers) | 2 (machines) | 3 (parts) |
 | ---: | --- | --- | --- |
@@ -25,9 +27,11 @@ This is a combination of global utility scripts that let you choose what you wan
 | 12     | Brown (construction firm) | -         | -                  |
 | 13     | Black (statue of Cubos)   | -         | -                  |
 
-3. Choose the COUNT of items you want to produce with '8' to count down and '9' to count up.  Counts up from 1-10, then 20, 30... 90, 100, then 200, 300 etc
-4. Optionally choose whether to craft ALL items for the desired output (`CRAFT_PRESERVATION = 0.0`) or to use up components that are already in your inventory when crafting the output (`CRAFT_PRESERVATION = 1.0`) - toggled with '4'.
-5. Hit '0' while in the factory to start production.
+Optionally, when in **producer** mode, you can hit '4' while in the building corresponding to the producer you want to craft, or when in **machine** mode you can hit '4' with the mouse cursor over the machine you want to craft in the machines tab in the factory.
+
+The `CRAFT_STATUS` global variable is inspired by HTTP status codes to tell you what happened in the craft:
+* 102 means "Processing", or the craft is still running
+* 412 means "Precondition Failed", or that you don't have enough dust/ingots at some tier to complete the craft.  The tier and amount that is needed is shown in the `CRAFT_REQUIRED_TIER` and `CRAFT_REQUIRED_COUNT` global variables.
 
 ## The scripts (general)
 
