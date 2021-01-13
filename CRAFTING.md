@@ -7,7 +7,7 @@ This is a combination of global utility scripts that let you choose what you wan
 1. Choose the TIER you want to produce with '1' (loops from 1 to 10)
 2. Choose the MODE with '2' and OUTPUT with '3'.  Refer to the following table to see what will be produced.
 3. Choose the COUNT of items you want to produce with '8' to count down and '9' to count up.  Counts up from 1-10, then 20, 30... 90, 100, then 200, 300 etc
-4. Optionally choose whether to craft ALL items for the desired output (`CRAFT_PRESERVATION = 0.0`) or to use up components that are already in your inventory when crafting the output (`CRAFT_PRESERVATION = 1.0`) - toggled with '4'.
+4. Optionally choose whether to craft ALL items for the desired output (`CRAFT_INVENTORY = 0.0`) or to use up components that are already in your inventory when crafting the output (`CRAFT_INVENTORY = 1.0`) - toggled with '5'.
 5. Hit '0' while in the factory to start production.
 
 | MODE | 1 (producers) | 2 (machines) | 3 (parts) |
@@ -209,6 +209,93 @@ craft_output = x + y*5
 ```
 
 `EWNyYWZ0IG1hY2hpbmUgc2V0AQAAAAVrZXkuNAEAAAAPY29tcGFyaXNvbi5ib29sD2NvbXBhcmlzb24uYm9vbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQKY3JhZnRfYnVzeQhjb25zdGFudAQCPT0IY29uc3RhbnQCAAAAAAhjb25zdGFudAQBJg5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQKY3JhZnRfbW9kZQhjb25zdGFudAQCPT0IY29uc3RhbnQCAgAAAAhjb25zdGFudAQBJhJ0b3duLndpbmRvdy5pc29wZW4IY29uc3RhbnQEB2ZhY3RvcnkEAAAADmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAF4A2QyaQxkb3VibGUuZmxvb3IRYXJpdGhtZXRpYy5kb3VibGURYXJpdGhtZXRpYy5kb3VibGURYXJpdGhtZXRpYy5kb3VibGURYXJpdGhtZXRpYy5kb3VibGUGdmVjMi54Dm1vdXNlLnBvc2l0aW9uCGNvbnN0YW50BAEvA2kyZAxzY3JlZW4ud2lkdGgIY29uc3RhbnQEAS0IY29uc3RhbnQDPQrXo3A92j8IY29uc3RhbnQEAS8IY29uc3RhbnQDmpmZmZmZuT8IY29uc3RhbnQEASsIY29uc3RhbnQDAAAAAAAA8D8OZ2xvYmFsLmludC5zZXQIY29uc3RhbnQEAXkDZDJpDGRvdWJsZS5mbG9vchFhcml0aG1ldGljLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAOamZmZmZnpPwhjb25zdGFudAQBLRFhcml0aG1ldGljLmRvdWJsZQZ2ZWMyLnkObW91c2UucG9zaXRpb24IY29uc3RhbnQEAS8DaTJkDXNjcmVlbi5oZWlnaHQIY29uc3RhbnQEAS8IY29uc3RhbnQDMQisHFpkyz8OZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCYwAAAA9jb21wYXJpc29uLmJvb2wPY29tcGFyaXNvbi5ib29sD2NvbXBhcmlzb24uYm9vbA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQBeAhjb25zdGFudAQBPAhjb25zdGFudAIBAAAACGNvbnN0YW50BAF8DmNvbXBhcmlzb24uaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAF4CGNvbnN0YW50BAE+CGNvbnN0YW50AgUAAAAIY29uc3RhbnQEAXwOY29tcGFyaXNvbi5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEAXkIY29uc3RhbnQEATwIY29uc3RhbnQCAAAAAAhjb25zdGFudAQBfA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQBeQhjb25zdGFudAQBPghjb25zdGFudAIBAAAADmdsb2JhbC5pbnQuc2V0CGNvbnN0YW50BAxjcmFmdF9vdXRwdXQOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEAXgIY29uc3RhbnQEASsOYXJpdGhtZXRpYy5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEAXkIY29uc3RhbnQEASoIY29uc3RhbnQCBQAAAA==`
+
+craft count up (1 1 5)
+
+```
+:global double craft_count
+:local double pow
+:local double inc
+
+key.9()
+(global.int.get("craft_busy") == 0)
+
+   gotoif(99, craft_count > 900000.0)
+   gotoif(a, craft_count < 1.0)
+   pow = double.floor(0.01 + (craft_count // 10.0))
+a: inc = 10.0 ^ pow
+   craft_count = craft_count + inc
+```
+
+`DmNyYWZ0IGNvdW50IHVwAQAAAAVrZXkuOQEAAAAOY29tcGFyaXNvbi5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECmNyYWZ0X2J1c3kIY29uc3RhbnQEAj09CGNvbnN0YW50AgAAAAAFAAAADmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AmMAAAARY29tcGFyaXNvbi5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEC2NyYWZ0X2NvdW50CGNvbnN0YW50BAE+CGNvbnN0YW50AwAAAABAdytBDmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AgQAAAARY29tcGFyaXNvbi5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEC2NyYWZ0X2NvdW50CGNvbnN0YW50BAE8CGNvbnN0YW50AwAAAAAAAPA/EGxvY2FsLmRvdWJsZS5zZXQIY29uc3RhbnQEA3Bvdwxkb3VibGUuZmxvb3IRYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDexSuR+F6hD8IY29uc3RhbnQEASsRYXJpdGhtZXRpYy5kb3VibGURZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEC2NyYWZ0X2NvdW50CGNvbnN0YW50BANsb2cIY29uc3RhbnQDAAAAAAAAJEAQbG9jYWwuZG91YmxlLnNldAhjb25zdGFudAQDaW5jEWFyaXRobWV0aWMuZG91YmxlCGNvbnN0YW50AwAAAAAAACRACGNvbnN0YW50BANwb3cQbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQDcG93EWdsb2JhbC5kb3VibGUuc2V0CGNvbnN0YW50BAtjcmFmdF9jb3VudBFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQLY3JhZnRfY291bnQIY29uc3RhbnQEASsQbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQDaW5j`
+
+craft count down (1 1 5)
+
+```
+:global double craft_count
+:local double pow
+:local double inc
+
+key.8()
+(global.int.get("craft_busy") == 0)
+
+   gotoif(a, craft_count < 1.0)
+   pow = double.floor(-0.01 + (craft_count // 10.0))
+a: inc = 10.0 ^ pow
+   gotoif(99, craft_count - inc < 1.0)
+   craft_count = craft_count - inc
+```
+
+`EGNyYWZ0IGNvdW50IGRvd24BAAAABWtleS44AQAAAA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQKY3JhZnRfYnVzeQhjb25zdGFudAQCPT0IY29uc3RhbnQCAAAAAAUAAAAOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCAwAAABFjb21wYXJpc29uLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQLY3JhZnRfY291bnQIY29uc3RhbnQEATwIY29uc3RhbnQDAAAAAAAA8D8QbG9jYWwuZG91YmxlLnNldAhjb25zdGFudAQDcG93DGRvdWJsZS5mbG9vchFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAN7FK5H4XqEvwhjb25zdGFudAQBKxFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQLY3JhZnRfY291bnQIY29uc3RhbnQEA2xvZwhjb25zdGFudAMAAAAAAAAkQBBsb2NhbC5kb3VibGUuc2V0CGNvbnN0YW50BANpbmMRYXJpdGhtZXRpYy5kb3VibGUIY29uc3RhbnQDAAAAAAAAJEAIY29uc3RhbnQEA3BvdxBsb2NhbC5kb3VibGUuZ2V0CGNvbnN0YW50BANwb3cOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCYwAAABFjb21wYXJpc29uLmRvdWJsZRFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQLY3JhZnRfY291bnQIY29uc3RhbnQEAS0QbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQDaW5jCGNvbnN0YW50BAE8CGNvbnN0YW50AwAAAAAAAPA/EWdsb2JhbC5kb3VibGUuc2V0CGNvbnN0YW50BAtjcmFmdF9jb3VudBFhcml0aG1ldGljLmRvdWJsZRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQLY3JhZnRfY291bnQIY29uc3RhbnQEAS0QbG9jYWwuZG91YmxlLmdldAhjb25zdGFudAQDaW5j`
+
+craft inventory use (1 1 1)
+
+```
+:global double craft_inventory
+
+key.5()
+(global.int.get("craft_busy") == 0)
+
+craft_inventory = 1.0 - craft_inventory
+```
+
+`E2NyYWZ0IGludmVudG9yeSB1c2UBAAAABWtleS41AQAAAA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQKY3JhZnRfYnVzeQhjb25zdGFudAQCPT0IY29uc3RhbnQCAAAAAAEAAAARZ2xvYmFsLmRvdWJsZS5zZXQIY29uc3RhbnQED2NyYWZ0X2ludmVudG9yeRFhcml0aG1ldGljLmRvdWJsZQhjb25zdGFudAMAAAAAAADwPwhjb25zdGFudAQBLRFnbG9iYWwuZG91YmxlLmdldAhjb25zdGFudAQPY3JhZnRfaW52ZW50b3J5`
+
+craft GO (1 1 18)
+
+```
+:global int craft_mode
+:global int craft_output
+:local int max
+
+key.0()
+
+(global.int.get("craft_busy") == 0 & isopen("factory"))
+
+  global.int.set("craft_busy", 1)
+  global.int.set("craft_require_tier", 0)
+  global.double.set("craft_require_count", 0.0)
+  global.int.set("craft_status", 102) ; Processing
+  global.int.set("craft_tier:" . craft_mode . "." . craft_output, global.int.get("craft_tier"))
+  global.double.set("craft_count:" . craft_mode . "." . craft_output, global.double.get("craft_count"))
+  gotoif(prod, craft_mode == 1)
+  gotoif(mach, craft_mode == 2)
+  gotoif(part, craft_mode == 3)
+  goto(end)
+prod: executesync("craft producer:" . craft_output)
+  goto(end)
+mach: executesync("craft machine:" . craft_output)
+  goto(end)
+part: executesync("craft part:" . craft_output)
+
+; Preserve status if set by the craft script
+end: gotoif(end2, global.int.get("craft_status") > 199)
+  global.int.set("craft_status", 200) ; OK
+end2: global.int.set("craft_busy", 0)
+```
+
+`CGNyYWZ0IEdPAQAAAAVrZXkuMAEAAAAPY29tcGFyaXNvbi5ib29sDmNvbXBhcmlzb24uaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BApjcmFmdF9idXN5CGNvbnN0YW50BAI9PQhjb25zdGFudAIAAAAACGNvbnN0YW50BAEmEnRvd24ud2luZG93Lmlzb3Blbghjb25zdGFudAQHZmFjdG9yeRIAAAAOZ2xvYmFsLmludC5zZXQIY29uc3RhbnQECmNyYWZ0X2J1c3kIY29uc3RhbnQCAQAAAA5nbG9iYWwuaW50LnNldAhjb25zdGFudAQSY3JhZnRfcmVxdWlyZV90aWVyCGNvbnN0YW50AgAAAAARZ2xvYmFsLmRvdWJsZS5zZXQIY29uc3RhbnQEE2NyYWZ0X3JlcXVpcmVfY291bnQIY29uc3RhbnQDAAAAAAAAAAAOZ2xvYmFsLmludC5zZXQIY29uc3RhbnQEDGNyYWZ0X3N0YXR1cwhjb25zdGFudAJmAAAADmdsb2JhbC5pbnQuc2V0BmNvbmNhdAZjb25jYXQGY29uY2F0CGNvbnN0YW50BAtjcmFmdF90aWVyOgNpMnMOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECmNyYWZ0X21vZGUIY29uc3RhbnQEAS4DaTJzDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAxjcmFmdF9vdXRwdXQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECmNyYWZ0X3RpZXIRZ2xvYmFsLmRvdWJsZS5zZXQGY29uY2F0BmNvbmNhdAZjb25jYXQIY29uc3RhbnQEDGNyYWZ0X2NvdW50OgNpMnMOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECmNyYWZ0X21vZGUIY29uc3RhbnQEAS4DaTJzDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAxjcmFmdF9vdXRwdXQRZ2xvYmFsLmRvdWJsZS5nZXQIY29uc3RhbnQEC2NyYWZ0X2NvdW50DmdlbmVyaWMuZ290b2lmCGNvbnN0YW50AgsAAAAOY29tcGFyaXNvbi5pbnQOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQECmNyYWZ0X21vZGUIY29uc3RhbnQEAj09CGNvbnN0YW50AgEAAAAOZ2VuZXJpYy5nb3RvaWYIY29uc3RhbnQCDQAAAA5jb21wYXJpc29uLmludA5nbG9iYWwuaW50LmdldAhjb25zdGFudAQKY3JhZnRfbW9kZQhjb25zdGFudAQCPT0IY29uc3RhbnQCAgAAAA5nZW5lcmljLmdvdG9pZghjb25zdGFudAIPAAAADmNvbXBhcmlzb24uaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BApjcmFmdF9tb2RlCGNvbnN0YW50BAI9PQhjb25zdGFudAIDAAAADGdlbmVyaWMuZ290bwhjb25zdGFudAIQAAAAE2dlbmVyaWMuZXhlY3V0ZXN5bmMGY29uY2F0CGNvbnN0YW50BA9jcmFmdCBwcm9kdWNlcjoDaTJzDmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAxjcmFmdF9vdXRwdXQMZ2VuZXJpYy5nb3RvCGNvbnN0YW50AhAAAAATZ2VuZXJpYy5leGVjdXRlc3luYwZjb25jYXQIY29uc3RhbnQEDmNyYWZ0IG1hY2hpbmU6A2kycw5nbG9iYWwuaW50LmdldAhjb25zdGFudAQMY3JhZnRfb3V0cHV0DGdlbmVyaWMuZ290bwhjb25zdGFudAIQAAAAE2dlbmVyaWMuZXhlY3V0ZXN5bmMGY29uY2F0CGNvbnN0YW50BAtjcmFmdCBwYXJ0OgNpMnMOZ2xvYmFsLmludC5nZXQIY29uc3RhbnQEDGNyYWZ0X291dHB1dA5nZW5lcmljLmdvdG9pZghjb25zdGFudAISAAAADmNvbXBhcmlzb24uaW50Dmdsb2JhbC5pbnQuZ2V0CGNvbnN0YW50BAxjcmFmdF9zdGF0dXMIY29uc3RhbnQEAT4IY29uc3RhbnQCxwAAAA5nbG9iYWwuaW50LnNldAhjb25zdGFudAQMY3JhZnRfc3RhdHVzCGNvbnN0YW50AsgAAAAOZ2xvYmFsLmludC5zZXQIY29uc3RhbnQECmNyYWZ0X2J1c3kIY29uc3RhbnQCAAAAAA==`
+
 
 ## Parts scripts
 
