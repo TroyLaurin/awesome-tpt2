@@ -96,7 +96,7 @@ The mine is a great place to learn scripting.  Most functions can be performed b
 
 Scripts that aren't necessarily about playing the base game, but add something fun to the game.
 
-- [Sudokustone teaser](https://discord.com/channels/488444879836413975/783731338304946217/797284972011847710) - sudoku in a random internet game? Awesome!
+- [The Perfect Sudoku](https://discord.com/channels/488444879836413975/783731338304946217/798912035798384661) - sudoku in a random internet game? Awesome!
 
 ## Footnotes
 
