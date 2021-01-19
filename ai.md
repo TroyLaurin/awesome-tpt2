@@ -92,7 +92,7 @@ The mine is a great place to learn scripting.  Most functions can be performed b
 - [Powerstone buy, combine and equip](https://discord.com/channels/488444879836413975/783731338304946217/784604847508422656)
 - [Another powerstone script](https://discord.com/channels/488444879836413975/783731338304946217/784924553394520074)
 - [Yet another powerstone script](https://discord.com/channels/488444879836413975/783731338304946217/786584100545757235) - this one runs 95 scripts in parallel
-- [More powerstone levelling](https://discord.com/channels/488444879836413975/783731338304946217/789502743098163260)
+- [More powerstone levelling](https://discord.com/channels/488444879836413975/783731338304946217/789502743098163260) - Upgrades all equipped powerstones of the type in the first equipped slot to one level above the one in the first slot (up to level 12)
 - [Turbo exec powerstone levelling](https://discord.com/channels/488444879836413975/783731338304946217/795750425474629674)
 ## Fun
 
