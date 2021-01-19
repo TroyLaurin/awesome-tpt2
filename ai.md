@@ -66,6 +66,8 @@ The mine is a great place to learn scripting.  Most functions can be performed b
 
 - [Dust tiering](https://discord.com/channels/488444879836413975/783731338304946217/783732405722808350)
 - [More dust tiering](https://discord.com/channels/488444879836413975/783731338304946217/795419856777773057)
+- [Targeted dust tiering](https://github.com/Takeces/tpt2-scripts/blob/main/dust_up.md)
+- [Craft any tier chip (standalone)](https://discord.com/channels/488444879836413975/783731338304946217/800555528635023371)
 
 ## Laboratory
 
